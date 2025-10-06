@@ -1,0 +1,56 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    restart: unless-stopped
+    container_name: web
+    env_file: ./.env.docker
+    ports:
+      - ${PORT:-4200}:4200
+
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./
+          target: /app/
+          ignore:
+            - node_modules/
+            - .gitignore
+            - .github
+            - docker*
+            - '*.spec.ts'
+        - action: rebuild
+          path: ./env*
+          target: /app/
+          ignore:
+            - '!.env*'
+        - action: rebuild
+          path: ./package.json
+          target: /app/
+          ignore:
+            - '!package.json'
+        - action: rebuild
+          path: ./Dockerfile.development
+          target: /app/
+          ignore:
+            - '!Dockerfile.development'
+
+    profiles:
+      - all
+      - single
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    container_name: ngrok
+    command:
+      - 'http'
+      - '--url=${NGROK_URL}'
+      - 'http://web:${PORT:-4200}'
+    env_file: ./.env.docker
+    ports:
+      - 4040:4040
+
+    profiles:
+      - all
