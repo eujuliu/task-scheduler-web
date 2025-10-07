@@ -22,7 +22,7 @@ describe('InputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have icon if type is password', () => {
+  it('should have icon', () => {
     let icon = fixture.nativeElement.querySelector('ion-icon');
     expect(icon).toBeNull();
     component.type = 'password';
@@ -33,7 +33,7 @@ describe('InputComponent', () => {
     expect(icon).toBeTruthy();
   });
 
-  it('should have label if label input', () => {
+  it('should have label', () => {
     let label = fixture.nativeElement.querySelector('label');
     expect(label).toBeNull();
     component.label = 'Text';
@@ -42,5 +42,17 @@ describe('InputComponent', () => {
 
     label = fixture.nativeElement.querySelector('label');
     expect(label).toBeTruthy();
+  });
+
+  it('should have placeholder text', () => {
+    let input = fixture.nativeElement.querySelector('input');
+
+    expect(input.placeholder).toBe('');
+    component.placeholder = 'test';
+
+    fixture.detectChanges();
+
+    input = fixture.nativeElement.querySelector('input');
+    expect(input.placeholder).toBe('test');
   });
 });

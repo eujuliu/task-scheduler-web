@@ -20,6 +20,9 @@ export class InputComponent {
   showPassword = signal(false);
 
   formattedLabel = computed(() => this.label.toLowerCase().trim().replaceAll(' ', '-'));
+  inputType = computed(() =>
+    this.type !== 'password' ? this.type : this.showPassword() ? 'text' : 'password',
+  );
 
   constructor() {
     addIcons(allIcons);
