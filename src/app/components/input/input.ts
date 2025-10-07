@@ -2,6 +2,7 @@ import { Component, computed, Input, signal } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as allIcons from 'ionicons/icons';
+import { Button } from '../button/button';
 
 export type InputType = 'text' | 'email' | 'password';
 
@@ -9,7 +10,7 @@ export type InputType = 'text' | 'email' | 'password';
   selector: 'app-input',
   templateUrl: './input.html',
   styleUrl: './input.css',
-  imports: [IonIcon],
+  imports: [IonIcon, Button],
 })
 export class InputComponent {
   @Input({ required: false }) type: InputType = 'text';
@@ -26,5 +27,9 @@ export class InputComponent {
 
   constructor() {
     addIcons(allIcons);
+  }
+
+  changeInputVisibility() {
+    this.showPassword.update((v) => !v);
   }
 }

@@ -7,9 +7,14 @@ const meta: Meta<Button> = {
   excludeStories: /.*Data$/,
   args: {
     type: 'button',
+    style: 'normal',
   },
   argTypes: {},
   tags: ['autodocs'],
+  render: (args) => ({
+    props: args,
+    template: `<app-button [type]="type" [style]="style">Text <ion-icon name="heart"></ion-icon></app-button>`,
+  }),
 };
 
 export default meta;
@@ -18,8 +23,6 @@ type Story = StoryObj<Button>;
 
 export const Default: Story = {
   args: {
-    icon: '',
-    text: 'test',
     type: 'button',
     style: 'normal',
   },
@@ -27,8 +30,6 @@ export const Default: Story = {
 
 export const Ghost: Story = {
   args: {
-    icon: '',
-    text: 'test',
     type: 'button',
     style: 'ghost',
   },

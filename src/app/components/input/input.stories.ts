@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
 import { InputComponent } from './input';
+import { expect, userEvent } from 'storybook/test';
 
 const meta: Meta<InputComponent & HTMLInputElement> = {
   title: 'Components/Input',
@@ -17,7 +18,7 @@ export const Default: Story = {
   args: {
     placeholder: 'Type some text',
     type: 'text',
-    label: 'Text',
+    label: '',
     icon: '',
   },
 };
@@ -33,5 +34,24 @@ export const Password: Story = {
   args: {
     ...Default.args,
     type: 'password',
+  },
+  play: async ({ canvas, canvasElement }) => {
+    await userEvent.type(canvas.getByPlaceholderText(Default.args?.placeholder ?? ''), '123456789');
+
+    await expect(canvasElement.querySelector('input[type="text"]')).toBeFalsy();
+
+    await userEvent.click(canvas.getByRole('button'));
+
+    await expect(canvasElement.querySelector('input[type="text"]')).toBeTruthy();
+
+    await userEvent.clear(canvas.getByPlaceholderText(Default.args?.placeholder ?? ''));
+    await userEvent.click(canvas.getByRole('button'));
+  },
+};
+
+export const WithLabel: Story = {
+  args: {
+    ...Default.args,
+    label: 'Label',
   },
 };
