@@ -1,0 +1,7 @@
+<button [type]="type" [class]="style">
+  @if (text.length) {
+  <span>{{ text }}</span>
+  } @if (icon.length) {
+  <ion-icon [name]="icon" aria-hidden="true"></ion-icon>
+  }
+</button>

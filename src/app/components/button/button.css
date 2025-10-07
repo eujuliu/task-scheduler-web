@@ -1,0 +1,31 @@
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  padding: 0.7rem 0.6rem;
+  transition: background 400ms;
+  color: var(--clr-surface-a0);
+  background-color: var(--clr-info-a10);
+
+  box-shadow: var(--box-shadow);
+  -webkit-box-shadow: var(--box-shadow);
+  -moz-box-shadow: var(--box-shadow);
+
+  &:hover {
+    background-color: var(--clr-info-a20);
+  }
+
+  &.ghost {
+    background-color: transparent;
+    color: var(--clr-primary-a0);
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}

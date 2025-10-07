@@ -1,16 +1,44 @@
 :root {
   font-size: 62.5%;
-  --white: hsl(0, 0%, 100%);
-  --black: hsla(0, 0%, 0%, 0.747);
-  --text-primary-color: hsl(0, 0%, 0%);
-  --text-secondary-color: hsl(349, 0%, 34%);
-  --text-success-color: hsl(140, 96%, 33%);
-  --text-error-color: hsl(349, 85%, 53%);
 
-  --btn-primary-color: hsl(209, 94%, 49%);
-  --btn-bg-color: hsl(209, 0%, 100%);
+  /** Base colors */
+  --clr-dark-a0: #000000;
+  --clr-light-a0: #ffffff;
 
-  --border-primary-color: hsl(349, 0%, 34%);
+  /** Theme primary colors */
+  --clr-primary-a0: #000000;
+  --clr-primary-a10: #000000;
+  --clr-primary-a20: #000000;
+
+  /** Theme surface colors */
+  --clr-surface-a0: #ffffff;
+  --clr-surface-a10: #f0f0f0;
+  --clr-surface-a20: #e1e1e1;
+
+  /** Theme tonal surface colors */
+  --clr-surface-tonal-a0: #e2e2e2;
+  --clr-surface-tonal-a10: #d7d7d7;
+  --clr-surface-tonal-a20: #cbcbcb;
+
+  /** Success colors */
+  --clr-success-a0: #1b7f5c;
+  --clr-success-a10: #28be8a;
+  --clr-success-a20: #58dbad;
+
+  /** Warning colors */
+  --clr-warning-a0: #b8871f;
+  --clr-warning-a10: #dfae44;
+  --clr-warning-a20: #ebca85;
+
+  /** Danger colors */
+  --clr-danger-a0: #b13535;
+  --clr-danger-a10: #d06262;
+  --clr-danger-a20: #e29d9d;
+
+  /** Info colors */
+  --clr-info-a0: #1e56a3;
+  --clr-info-a10: #347ada;
+  --clr-info-a20: #74a4e6;
 
   --box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.08);
 }
@@ -27,10 +55,10 @@
 }
 
 html,
-body,
-#__next {
+body {
   height: 100%;
-  color: var(--very-dark-blue);
+  color: var(--clr-primary-a0);
+  background-color: var(--clr-surface-a0);
 }
 
 body {
