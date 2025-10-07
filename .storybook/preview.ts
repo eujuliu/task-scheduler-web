@@ -1,8 +1,8 @@
 import type { Preview } from '@storybook/angular';
-import '../src/styles.css';
 
 const preview: Preview = {
   parameters: {
+    actions: { argTypesRegex: '^on.*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,

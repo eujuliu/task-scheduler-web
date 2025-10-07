@@ -1,0 +1,16 @@
+<div class="input-container">
+  @if (label.length > 0) {
+  <label [for]="formattedLabel">{{ label }}</label>
+  }
+
+  <div class="input-wrapper">
+    <input [id]="formattedLabel" [type]="type" [placeholder]="placeholder" />
+    @if (icon.length) {
+    <ion-icon [name]="icon" aria-hidden="true"></ion-icon>
+    } @else if (type === "password") {
+    <div class="button">
+      <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+    </div>
+    }
+  </div>
+</div>
