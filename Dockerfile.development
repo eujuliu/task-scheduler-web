@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN CI=true pnpm install --frozen-lockfile
+RUN CI=true pnpm install
 
 COPY . /app
 

@@ -7,6 +7,7 @@ export type ButtonStyle = 'normal' | 'ghost' | 'outline';
   selector: 'app-button',
   templateUrl: './button.html',
   styleUrl: './button.css',
+  imports: [],
 })
 export class Button {
   @Input({ required: true }) type: ButtonType = 'button';

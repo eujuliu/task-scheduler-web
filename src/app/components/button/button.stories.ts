@@ -5,15 +5,15 @@ const meta: Meta<Button> = {
   title: 'Components/Button',
   component: Button,
   excludeStories: /.*Data$/,
-  args: {
-    type: 'button',
-    style: 'normal',
-  },
-  argTypes: {},
+  args: {},
   tags: ['autodocs'],
   render: (args) => ({
     props: args,
-    template: `<app-button [type]="type" [style]="style" [disabled]="disabled">Text <ion-icon name="heart"></ion-icon></app-button>`,
+    template: `
+      <app-button [type]="type" [style]="style" [disabled]="disabled">
+        Text <ion-icon name="heart"></ion-icon>
+      </app-button>
+    `,
   }),
 };
 
@@ -25,6 +25,7 @@ export const Default: Story = {
   args: {
     type: 'button',
     style: 'normal',
+    disabled: false,
   },
 };
 
@@ -42,7 +43,7 @@ export const Outline: Story = {
   },
 };
 
-export const DefaultDisabled: Story = {
+export const Disabled: Story = {
   args: {
     ...Default.args,
     disabled: true,

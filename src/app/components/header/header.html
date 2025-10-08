@@ -1,0 +1,29 @@
+<header>
+  <div class="header-wrapper">
+    <nav>
+      <ul>
+        @for (nav of navigation; track nav.id) {
+        <li>
+          <a [routerLink]="nav.to">
+            @if (nav.icon) {
+            <ion-icon [name]="nav.icon" aria-hidden="true"></ion-icon>
+            } {{ nav.text }}
+          </a>
+        </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="right-section">
+      <a routerLink="/login">
+        <ion-icon name="person-circle-outline" aria-hidden="true"></ion-icon>
+        Login
+      </a>
+
+      <a routerLink="/register">
+        <ion-icon name="person-add-outline" aria-hidden="true"></ion-icon>
+        Register
+      </a>
+    </div>
+  </div>
+</header>
