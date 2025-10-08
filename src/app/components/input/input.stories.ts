@@ -65,6 +65,7 @@ export const Invalid: Story = {
     ...Default.args,
     invalid: true,
     dirty: true,
+    errors: ['required'],
   },
 };
 

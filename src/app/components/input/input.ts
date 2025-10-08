@@ -3,11 +3,7 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as allIcons from 'ionicons/icons';
 import { Button } from '../button/button';
-import {
-  type ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  type ValidationErrors,
-} from '@angular/forms';
+import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ValidationErrors as ErrorsMessage, ValidationErrorsType } from '../../errors/validation';
 
@@ -18,6 +14,7 @@ export type InputType = 'text' | 'email' | 'password';
   templateUrl: './input.html',
   styleUrl: './input.css',
   imports: [IonIcon, Button],
+  standalone: true,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -35,8 +32,11 @@ export class InputComponent implements ControlValueAccessor {
   @Input({ required: false }) invalid = false;
   @Input({ required: false }) touched = false;
   @Input({ required: false }) dirty = false;
-  @Input({ required: false, transform: (errors) => Object.keys(errors ?? {}) })
-  errors: ValidationErrors = {};
+  @Input({
+    required: false,
+    transform: (errors: Record<string, unknown>) => Object.keys(errors ?? {}),
+  })
+  errors: ValidationErrorsType[] = [];
 
   protected value: unknown = '';
   protected disabled = false;

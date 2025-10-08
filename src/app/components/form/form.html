@@ -5,14 +5,12 @@
     [label]="item.label"
     [type]="item.type"
     [placeholder]="item.placeholder"
-    [invalid]="form.get(item.id).invalid"
-    [touched]="form.get(item.id).touched"
-    [dirty]="form.get(item.id).dirty"
-    [errors]="form.get(item.id).errors"
+    [invalid]="form.get(item.id)?.invalid ?? true"
+    [touched]="form.get(item.id)?.touched ?? false"
+    [dirty]="form.get(item.id)?.dirty ?? false"
+    [errors]="form.get(item.id)?.errors ?? {}"
   />
   }
-
-  <div>{{ value }}</div>
 
   <ng-content select="footer">
     <app-button [type]="'submit'" [style]="'normal'" [disabled]="form.invalid">Submit</app-button>
