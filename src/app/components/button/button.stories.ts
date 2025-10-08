@@ -13,7 +13,7 @@ const meta: Meta<Button> = {
   tags: ['autodocs'],
   render: (args) => ({
     props: args,
-    template: `<app-button [type]="type" [style]="style">Text <ion-icon name="heart"></ion-icon></app-button>`,
+    template: `<app-button [type]="type" [style]="style" [disabled]="disabled">Text <ion-icon name="heart"></ion-icon></app-button>`,
   }),
 };
 
@@ -30,7 +30,21 @@ export const Default: Story = {
 
 export const Ghost: Story = {
   args: {
-    type: 'button',
+    ...Default.args,
     style: 'ghost',
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    ...Default.args,
+    style: 'outline',
+  },
+};
+
+export const DefaultDisabled: Story = {
+  args: {
+    ...Default.args,
+    disabled: true,
   },
 };

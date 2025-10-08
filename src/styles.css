@@ -6,9 +6,9 @@
   --clr-light-a0: #ffffff;
 
   /** Theme primary colors */
-  --clr-primary-a0: #000000;
-  --clr-primary-a10: #000000;
-  --clr-primary-a20: #000000;
+  --clr-primary-a0: #2b2b2b;
+  --clr-primary-a10: #272727;
+  --clr-primary-a20: #232323;
 
   /** Theme surface colors */
   --clr-surface-a0: #ffffff;
@@ -16,9 +16,9 @@
   --clr-surface-a20: #e1e1e1;
 
   /** Theme tonal surface colors */
-  --clr-surface-tonal-a0: #e2e2e2;
-  --clr-surface-tonal-a10: #d7d7d7;
-  --clr-surface-tonal-a20: #cbcbcb;
+  --clr-surface-tonal-a0: #e7e7e7;
+  --clr-surface-tonal-a10: #dbdbdb;
+  --clr-surface-tonal-a20: #cfcfcf;
 
   /** Success colors */
   --clr-success-a0: #1b7f5c;

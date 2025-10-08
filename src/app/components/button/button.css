@@ -4,17 +4,19 @@ button {
   justify-content: center;
   gap: 0.5rem;
   border-radius: 5px;
-  padding: 0.7rem 0.6rem;
+  padding: 0.8rem;
   transition: background 400ms;
   color: var(--clr-surface-a0);
-  background-color: var(--clr-info-a10);
+  background-color: var(--clr-primary-a0);
+  max-height: 34px;
+  font-size: 1.2rem;
 
   box-shadow: var(--box-shadow);
   -webkit-box-shadow: var(--box-shadow);
   -moz-box-shadow: var(--box-shadow);
 
   &:hover {
-    background-color: var(--clr-info-a20);
+    background-color: var(--clr-primary-a20);
   }
 
   &.ghost {
@@ -27,5 +29,20 @@ button {
     &:hover {
       background-color: var(--clr-surface-a10);
     }
+  }
+
+  &.outline {
+    background-color: transparent;
+    color: var(--clr-primary-a0);
+    border: 1px solid var(--clr-surface-tonal-a20);
+
+    &:hover {
+      background-color: var(--clr-surface-a10);
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.8;
   }
 }

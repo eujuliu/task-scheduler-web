@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [class]="direction">
+  @for (item of fields; track item.id) {
+  <app-input
+    [formControlName]="item.id"
+    [label]="item.label"
+    [type]="item.type"
+    [placeholder]="item.placeholder"
+    [invalid]="form.get(item.id).invalid"
+    [touched]="form.get(item.id).touched"
+    [dirty]="form.get(item.id).dirty"
+    [errors]="form.get(item.id).errors"
+  />
+  }
+
+  <div>{{ value }}</div>
+
+  <ng-content select="footer">
+    <app-button [type]="'submit'" [style]="'normal'" [disabled]="form.invalid">Submit</app-button>
+  </ng-content>
+</form>

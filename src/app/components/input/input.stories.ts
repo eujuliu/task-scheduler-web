@@ -20,6 +20,10 @@ export const Default: Story = {
     type: 'text',
     label: '',
     icon: '',
+    errors: [],
+    invalid: false,
+    dirty: false,
+    touched: false,
   },
 };
 
@@ -53,5 +57,20 @@ export const WithLabel: Story = {
   args: {
     ...Default.args,
     label: 'Label',
+  },
+};
+
+export const Invalid: Story = {
+  args: {
+    ...Default.args,
+    invalid: true,
+    dirty: true,
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    ...Default.args,
+    icon: 'heart-outline',
   },
 };

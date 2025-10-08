@@ -1,0 +1,10 @@
+form {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+  &.row {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}

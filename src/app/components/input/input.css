@@ -1,8 +1,15 @@
+.ng-invalid {
+  .input-wrapper {
+    border-color: var(--clr-danger-a0);
+  }
+}
+
 .input-container {
   label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
+    font-size: 1.4rem;
   }
 
   .input-wrapper {
@@ -11,13 +18,32 @@
     align-items: center;
     border: 1px solid var(--clr-surface-tonal-a20);
     padding: 0.5rem 1rem;
-    padding-right: 0rem;
     border-radius: 6px;
     max-height: 32px;
 
     box-shadow: var(--box-shadow);
     -webkit-box-shadow: var(--box-shadow);
     -moz-box-shadow: var(--box-shadow);
+
+    &.invalid {
+      border: 1px solid var(--clr-danger-a0);
+
+      input {
+        color: var(--clr-danger-a0);
+
+        &::placeholder {
+          color: var(--clr-danger-a0);
+        }
+      }
+
+      ion-icon {
+        color: var(--clr-danger-a0);
+      }
+    }
+
+    &:has(ion-icon) {
+      padding-right: 0rem;
+    }
 
     &:has(input:focus-visible) {
       outline: 0.15rem solid;
@@ -40,10 +66,29 @@
       }
     }
 
+    .icon {
+      padding: 0.7rem 0.6rem;
+    }
+
     .button {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  .errors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .error {
+      color: var(--clr-danger-a0);
+      font-size: 1.2rem;
+
+      &:first-of-type {
+        margin-top: 0.5rem;
+      }
     }
   }
 }

@@ -1,8 +1,15 @@
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, computed, forwardRef, Input, signal } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as allIcons from 'ionicons/icons';
 import { Button } from '../button/button';
+import {
+  type ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  type ValidationErrors,
+} from '@angular/forms';
+
+import { ValidationErrors as ErrorsMessage, ValidationErrorsType } from '../../errors/validation';
 
 export type InputType = 'text' | 'email' | 'password';
 
@@ -11,12 +18,28 @@ export type InputType = 'text' | 'email' | 'password';
   templateUrl: './input.html',
   styleUrl: './input.css',
   imports: [IonIcon, Button],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputComponent),
+      multi: true,
+    },
+  ],
 })
-export class InputComponent {
+export class InputComponent implements ControlValueAccessor {
   @Input({ required: false }) type: InputType = 'text';
   @Input({ required: false }) label = '';
   @Input({ required: false, transform: (val: string) => val.trim() }) placeholder = '';
   @Input({ required: false }) icon = '';
+
+  @Input({ required: false }) invalid = false;
+  @Input({ required: false }) touched = false;
+  @Input({ required: false }) dirty = false;
+  @Input({ required: false, transform: (errors) => Object.keys(errors ?? {}) })
+  errors: ValidationErrors = {};
+
+  protected value: unknown = '';
+  protected disabled = false;
 
   showPassword = signal(false);
 
@@ -25,11 +48,43 @@ export class InputComponent {
     this.type !== 'password' ? this.type : this.showPassword() ? 'text' : 'password',
   );
 
+  onChanged?: (value: unknown) => void;
+  onTouched?: () => void;
+
   constructor() {
     addIcons(allIcons);
   }
 
+  getErrorMessage(key: ValidationErrorsType) {
+    return ErrorsMessage[key];
+  }
+
   changeInputVisibility() {
     this.showPassword.update((v) => !v);
+  }
+
+  writeValue(value: unknown) {
+    this.value = value;
+  }
+
+  registerOnChange(fn: (value: unknown) => void) {
+    this.onChanged = fn;
+  }
+
+  registerOnTouched(fn: () => void) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  setInput(event: Event) {
+    if (!this.disabled) {
+      const target = event.target as HTMLInputElement;
+      this.writeValue(target.value);
+      if (this.onChanged) this.onChanged(target.value);
+      if (this.onTouched) this.onTouched();
+    }
   }
 }
