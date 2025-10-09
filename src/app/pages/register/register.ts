@@ -1,17 +1,24 @@
 import { Component } from '@angular/core';
 import { Form, FormField } from '../../components/form/form';
 import { FormGroup, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { Button } from '../../components/button/button';
 
 @Component({
-  selector: 'app-login',
-  imports: [Form, RouterLink, Button],
-  templateUrl: './login.html',
-  styleUrl: './login.css',
+  selector: 'app-register',
+  imports: [Form, Button],
+  templateUrl: './register.html',
+  styleUrl: './register.css',
 })
-export class Login {
+export class Register {
+  form!: FormGroup;
   formFields: FormField[] = [
+    {
+      id: 'username',
+      label: 'Username*',
+      placeholder: 'Type your best username',
+      type: 'text',
+      validators: [Validators.required],
+    },
     {
       id: 'email',
       label: 'Email*',
@@ -27,9 +34,8 @@ export class Login {
       validators: [Validators.required],
     },
   ];
-  form!: FormGroup;
 
-  login(data: Record<string, unknown>) {
+  register(data: Record<string, unknown>) {
     console.log(data);
   }
 }

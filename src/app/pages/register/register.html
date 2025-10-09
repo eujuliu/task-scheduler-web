@@ -1,6 +1,6 @@
-<p class="title">Login</p>
+<p class="title">Register</p>
 
-<app-form [fields]="formFields" (sendData)="login($event)" (changeForm)="form = $event">
+<app-form [fields]="formFields" (sendData)="register($event)" (changeForm)="form = $event">
   <app-button
     [type]="'submit'"
     [style]="'normal'"
@@ -10,8 +10,6 @@
     [style.--btn-bg-hover-color]="'var(--clr-success-a10)'"
     [full]="true"
     class="submit"
-    >Login</app-button
+    >Register</app-button
   >
 </app-form>
-
-<a routerLink="/recovery-password" class="recovery-link">Forgot your password? Click here</a>

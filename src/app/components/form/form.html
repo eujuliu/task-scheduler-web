@@ -14,14 +14,12 @@
     }
   </div>
 
-  <ng-content select="footer">
+  <ng-content select=".submit">
     <app-button
       [type]="'submit'"
       [style]="'normal'"
       [size]="'lg'"
       [disabled]="form.invalid"
-      [style.--btn-bg-color]="'var(--clr-success-a0)'"
-      [style.--btn-bg-hover-color]="'var(--clr-success-a10)'"
       [full]="direction === 'column'"
       >Submit</app-button
     >
