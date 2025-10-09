@@ -12,6 +12,7 @@ import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValidationErrors as ErrorsMessage, ValidationErrorsType } from '../../errors/validation';
 
 export type InputType = 'text' | 'email' | 'password';
+export type StrengthIndicatorResponse = 'weak' | 'medium' | 'good' | 'strong';
 
 @Component({
   selector: 'app-input',
@@ -36,13 +37,21 @@ export class InputComponent implements ControlValueAccessor {
   @Input({ required: false }) invalid = false;
   @Input({ required: false }) touched = false;
   @Input({ required: false }) dirty = false;
+
   @Input({
     required: false,
     transform: (errors: Record<string, unknown>) => Object.keys(errors ?? {}),
   })
   errors: ValidationErrorsType[] = [];
 
-  protected value: unknown = '';
+  @Input({
+    required: false,
+  })
+  validateValueStrength?: (value: string) => StrengthIndicatorResponse;
+
+  strength = signal('');
+
+  protected value = '';
   protected disabled = false;
 
   showPassword = signal(false);
@@ -63,7 +72,7 @@ export class InputComponent implements ControlValueAccessor {
     this.showPassword.update((v) => !v);
   }
 
-  writeValue(value: unknown) {
+  writeValue(value: string) {
     this.value = value;
   }
 
@@ -82,9 +91,17 @@ export class InputComponent implements ControlValueAccessor {
   setInput(event: Event) {
     if (!this.disabled) {
       const target = event.target as HTMLInputElement;
+
       this.writeValue(target.value);
+
       if (this.onChanged) this.onChanged(target.value);
       if (this.onTouched) this.onTouched();
+
+      if (this.validateValueStrength) {
+        const strength = this.validateValueStrength(target.value);
+
+        this.strength.update(() => strength);
+      }
     }
   }
 }

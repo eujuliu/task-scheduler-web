@@ -6,6 +6,7 @@
       [label]="item.label"
       [type]="item.type"
       [placeholder]="item.placeholder"
+      [validateValueStrength]="item.strengthValidator"
       [invalid]="form.get(item.id)?.invalid ?? true"
       [touched]="form.get(item.id)?.touched ?? false"
       [dirty]="form.get(item.id)?.dirty ?? false"

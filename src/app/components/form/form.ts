@@ -6,7 +6,7 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { Button } from '../button/button';
-import { InputComponent, InputType } from '../input/input';
+import { InputComponent, InputType, StrengthIndicatorResponse } from '../input/input';
 
 export interface FormField {
   id: string;
@@ -15,6 +15,7 @@ export interface FormField {
   placeholder: string;
   validators: ValidatorFn[];
   value?: unknown;
+  strengthValidator?: (value: string) => StrengthIndicatorResponse;
 }
 
 @Component({
