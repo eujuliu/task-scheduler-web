@@ -1,12 +1,25 @@
-import { Component, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Header, NavigationItem } from './components/header/header';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class App {
-  protected readonly title = signal('web');
+  links: NavigationItem[] = [
+    {
+      id: 'tasks',
+      text: 'task',
+      to: '/tasks',
+    },
+    {
+      id: 'emails',
+      text: 'email',
+      to: '/emails',
+    },
+  ];
 }

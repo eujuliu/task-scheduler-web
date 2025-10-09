@@ -1,1 +1,91 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  font-size: 62.5%;
+
+  /** Base colors */
+  --clr-dark-a0: #000000;
+  --clr-light-a0: #ffffff;
+
+  /** Theme primary colors */
+  --clr-primary-a0: #2b2b2b;
+  --clr-primary-a10: #272727;
+  --clr-primary-a20: #232323;
+
+  /** Theme surface colors */
+  --clr-surface-a0: #ffffff;
+  --clr-surface-a10: #f0f0f0;
+  --clr-surface-a20: #e1e1e1;
+
+  /** Theme tonal surface colors */
+  --clr-surface-tonal-a0: #e7e7e7;
+  --clr-surface-tonal-a10: #dbdbdb;
+  --clr-surface-tonal-a20: #cfcfcf;
+
+  /** Success colors */
+  --clr-success-a0: #1b7f5c;
+  --clr-success-a10: #28be8a;
+  --clr-success-a20: #58dbad;
+
+  /** Warning colors */
+  --clr-warning-a0: #b8871f;
+  --clr-warning-a10: #dfae44;
+  --clr-warning-a20: #ebca85;
+
+  /** Danger colors */
+  --clr-danger-a0: #b13535;
+  --clr-danger-a10: #d06262;
+  --clr-danger-a20: #e29d9d;
+
+  /** Info colors */
+  --clr-info-a0: #1e56a3;
+  --clr-info-a10: #347ada;
+  --clr-info-a20: #74a4e6;
+
+  --box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  color: var(--clr-primary-a0);
+  background-color: var(--clr-surface-a0);
+}
+
+body {
+  font:
+    500 16px/1.5 'Inter',
+    sans-serif;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}

@@ -1,0 +1,25 @@
+:host {
+  width: var(--form-width, fit-content);
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+
+    .fields {
+      display: flex;
+      gap: var(--form-gap, 1rem);
+      flex-direction: column;
+    }
+
+    &.row {
+      flex-direction: row;
+      align-items: flex-end;
+
+      .fields {
+        flex-direction: row;
+      }
+    }
+  }
+}
