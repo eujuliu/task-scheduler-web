@@ -1,34 +1,33 @@
-<div class="input-container">
-  @if (label.length > 0) {
-  <label [for]="formattedLabel()">{{ label }}</label>
-  }
+@if (label.length > 0) {
+<label [for]="formattedLabel()">{{ label }}</label>
+}
 
-  <div class="input-wrapper" [class]="invalid && dirty ? 'invalid' : ''">
-    <input
-      [id]="formattedLabel()"
-      (input)="setInput($event)"
-      type="{{ inputType() }}"
-      [placeholder]="placeholder"
-      [disabled]="disabled"
-      autocomplete="off"
-    />
-    @if (icon.length) {
-    <ion-icon [name]="icon" aria-hidden="true" class="icon"></ion-icon>
-    } @else if (type === "password") {
-    <app-button [type]="'button'" [style]="'ghost'" (click)="changeInputVisibility()">
-      <ion-icon
-        [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"
-        [attr.aria-label]="showPassword() ? 'hidden' : 'show'"
-      ></ion-icon>
-    </app-button>
-    }
-  </div>
-
-  @if (invalid && dirty) {
-  <div class="errors">
-    @for (key of errors; track idx; let idx = $index) {
-    <span class="error">{{ getErrorMessage(key) }}</span>
-    }
-  </div>
+<div class="input-wrapper" [class]="invalid && dirty ? 'invalid' : ''">
+  <input
+    [id]="formattedLabel()"
+    (input)="setInput($event)"
+    type="{{ inputType() }}"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    autocomplete="off"
+  />
+  @if (icon.length) {
+  <ion-icon [name]="icon" aria-hidden="true" class="icon"></ion-icon>
+  } @else if (type === "password") {
+  <app-button [type]="'button'" [style]="'ghost'" [size]="'lg'" (click)="changeInputVisibility()">
+    <ion-icon
+      [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"
+      [attr.aria-label]="showPassword() ? 'hidden' : 'show'"
+      [style.font-size]="'2rem'"
+    ></ion-icon>
+  </app-button>
   }
 </div>
+
+@if (invalid && dirty) {
+<div class="errors">
+  @for (key of errors; track idx; let idx = $index) {
+  <span class="error">{{ getErrorMessage(key) }}</span>
+  }
+</div>
+}

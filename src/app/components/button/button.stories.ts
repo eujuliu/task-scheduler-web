@@ -10,7 +10,7 @@ const meta: Meta<Button> = {
   render: (args) => ({
     props: args,
     template: `
-      <app-button [type]="type" [style]="style" [disabled]="disabled">
+      <app-button [type]="type" [style]="style" [disabled]="disabled" [full]="full" [size]="size">
         Text <ion-icon name="heart"></ion-icon>
       </app-button>
     `,
@@ -26,6 +26,8 @@ export const Default: Story = {
     type: 'button',
     style: 'normal',
     disabled: false,
+    full: false,
+    size: 'md',
   },
 };
 

@@ -28,6 +28,7 @@ export class Form implements OnInit {
   @Input({ required: false }) direction: 'column' | 'row' = 'column';
 
   @Output() sendData = new EventEmitter<Record<string, unknown>>();
+  @Output() formBuilded = new EventEmitter<FormGroup>();
 
   fb = inject(NonNullableFormBuilder);
   form!: FormGroup;
@@ -44,6 +45,8 @@ export class Form implements OnInit {
     });
 
     this.form = this.fb.group(formControls);
+
+    this.formBuilded.emit(this.form);
   }
 
   onSubmit() {

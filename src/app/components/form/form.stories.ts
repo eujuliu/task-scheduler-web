@@ -43,6 +43,7 @@ export const Default: Story = {
         validators: [Validators.required],
       },
     ],
+    direction: 'column',
   },
 
   play: async ({ canvasElement }) => {

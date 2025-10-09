@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header, NavigationItem } from './components/header/header';
 
@@ -7,6 +7,7 @@ import { Header, NavigationItem } from './components/header/header';
   imports: [RouterOutlet, Header],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class App {
   links: NavigationItem[] = [

@@ -1,10 +1,4 @@
-.ng-invalid {
-  .input-wrapper {
-    border-color: var(--clr-danger-a0);
-  }
-}
-
-.input-container {
+:host {
   label {
     display: block;
     margin-bottom: 0.5rem;
@@ -19,27 +13,11 @@
     border: 1px solid var(--clr-surface-tonal-a20);
     padding: 0.5rem 1rem;
     border-radius: 6px;
-    max-height: 32px;
+    height: 42px;
 
     box-shadow: var(--box-shadow);
     -webkit-box-shadow: var(--box-shadow);
     -moz-box-shadow: var(--box-shadow);
-
-    &.invalid {
-      border: 1px solid var(--clr-danger-a0);
-
-      input {
-        color: var(--clr-danger-a0);
-
-        &::placeholder {
-          color: var(--clr-danger-a0);
-        }
-      }
-
-      ion-icon {
-        color: var(--clr-danger-a0);
-      }
-    }
 
     &:has(ion-icon) {
       padding-right: 0rem;
@@ -63,6 +41,22 @@
       &::placeholder {
         font-size: 1.4rem;
         font-weight: 400;
+      }
+    }
+
+    &.invalid {
+      border: 1px solid var(--clr-danger-a0);
+
+      input {
+        color: var(--clr-danger-a0);
+
+        &::placeholder {
+          color: var(--clr-danger-a0);
+        }
+      }
+
+      ion-icon {
+        color: var(--clr-danger-a0);
       }
     }
 

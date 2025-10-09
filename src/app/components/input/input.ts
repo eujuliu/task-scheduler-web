@@ -1,7 +1,11 @@
-import { Component, computed, forwardRef, Input, signal } from '@angular/core';
-import { IonIcon } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import * as allIcons from 'ionicons/icons';
+import {
+  Component,
+  computed,
+  CUSTOM_ELEMENTS_SCHEMA,
+  forwardRef,
+  Input,
+  signal,
+} from '@angular/core';
 import { Button } from '../button/button';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -13,8 +17,7 @@ export type InputType = 'text' | 'email' | 'password';
   selector: 'app-input',
   templateUrl: './input.html',
   styleUrl: './input.css',
-  imports: [IonIcon, Button],
-  standalone: true,
+  imports: [Button],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -22,6 +25,7 @@ export type InputType = 'text' | 'email' | 'password';
       multi: true,
     },
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class InputComponent implements ControlValueAccessor {
   @Input({ required: false }) type: InputType = 'text';
@@ -50,10 +54,6 @@ export class InputComponent implements ControlValueAccessor {
 
   onChanged?: (value: unknown) => void;
   onTouched?: () => void;
-
-  constructor() {
-    addIcons(allIcons);
-  }
 
   getErrorMessage(key: ValidationErrorsType) {
     return ErrorsMessage[key];

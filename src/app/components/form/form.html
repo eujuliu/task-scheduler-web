@@ -1,18 +1,29 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" [class]="direction">
-  @for (item of fields; track item.id) {
-  <app-input
-    [formControlName]="item.id"
-    [label]="item.label"
-    [type]="item.type"
-    [placeholder]="item.placeholder"
-    [invalid]="form.get(item.id)?.invalid ?? true"
-    [touched]="form.get(item.id)?.touched ?? false"
-    [dirty]="form.get(item.id)?.dirty ?? false"
-    [errors]="form.get(item.id)?.errors ?? {}"
-  />
-  }
+  <div class="fields" [class]="direction">
+    @for (item of fields; track item.id) {
+    <app-input
+      [formControlName]="item.id"
+      [label]="item.label"
+      [type]="item.type"
+      [placeholder]="item.placeholder"
+      [invalid]="form.get(item.id)?.invalid ?? true"
+      [touched]="form.get(item.id)?.touched ?? false"
+      [dirty]="form.get(item.id)?.dirty ?? false"
+      [errors]="form.get(item.id)?.errors ?? {}"
+    />
+    }
+  </div>
 
   <ng-content select="footer">
-    <app-button [type]="'submit'" [style]="'normal'" [disabled]="form.invalid">Submit</app-button>
+    <app-button
+      [type]="'submit'"
+      [style]="'normal'"
+      [size]="'lg'"
+      [disabled]="form.invalid"
+      [style.--btn-bg-color]="'var(--clr-success-a0)'"
+      [style.--btn-bg-hover-color]="'var(--clr-success-a10)'"
+      [full]="direction === 'column'"
+      >Submit</app-button
+    >
   </ng-content>
 </form>

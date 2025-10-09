@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/angular';
 import { InputComponent } from './input';
 import { expect, userEvent } from 'storybook/test';
 
-const meta: Meta<InputComponent & HTMLInputElement> = {
+const meta: Meta<InputComponent> = {
   title: 'Components/Input',
   component: InputComponent,
   excludeStories: /.*Data$/,
@@ -65,7 +65,8 @@ export const Invalid: Story = {
     ...Default.args,
     invalid: true,
     dirty: true,
-    errors: ['required'],
+    // @ts-expect-error this will be transform into an array of strings
+    errors: { required: true },
   },
 };
 

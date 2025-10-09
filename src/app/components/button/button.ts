@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 export type ButtonType = 'button' | 'submit';
 export type ButtonStyle = 'normal' | 'ghost' | 'outline';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 @Component({
   selector: 'app-button',
@@ -12,5 +13,7 @@ export type ButtonStyle = 'normal' | 'ghost' | 'outline';
 export class Button {
   @Input({ required: true }) type: ButtonType = 'button';
   @Input({ required: true }) style: ButtonStyle = 'normal';
+  @Input({ required: false }) size: ButtonSize = 'md';
   @Input({ required: false }) disabled = false;
+  @Input({ required: false }) full = false;
 }
