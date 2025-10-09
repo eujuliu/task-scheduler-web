@@ -59,7 +59,7 @@ export const Password: Story = {
       if (/(?=.*?[0-9])/g.test(value)) strength += 1;
       if (/(?=.*?[#?!@$%^&*-])/g.test(value)) strength += 1;
 
-      return levels[strength] ?? '';
+      return levels[strength] ?? 'weak';
     },
   },
   play: async ({ canvas, canvasElement }) => {

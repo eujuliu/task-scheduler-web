@@ -61,7 +61,8 @@
     }
 
     .icon {
-      padding: 0.7rem 0.6rem;
+      font-size: 1.8rem;
+      padding: 0.7rem 0.8rem;
     }
 
     .button {
@@ -107,27 +108,15 @@
 
         transition: width 0.3s;
       }
-
-      &.first::before {
-        background-color: var(--clr-danger-a20);
-      }
-
-      &.second::before {
-        background-color: var(--clr-warning-a20);
-      }
-
-      &.third::before {
-        background-color: var(--clr-success-a20);
-      }
-
-      &.fourth::before {
-        background-color: var(--clr-success-a20);
-      }
     }
 
     &.weak {
       span.first::before {
         width: 100%;
+      }
+
+      span::before {
+        background-color: var(--clr-danger-a20);
       }
 
       span:last-of-type::after {
@@ -139,6 +128,10 @@
       span.first::before,
       span.second::before {
         width: 100%;
+      }
+
+      span::before {
+        background-color: var(--clr-warning-a20);
       }
 
       span:last-of-type::after {
@@ -153,6 +146,10 @@
         width: 100%;
       }
 
+      span::before {
+        background-color: var(--clr-success-a20);
+      }
+
       span:last-of-type::after {
         color: var(--clr-success-a0);
       }
@@ -164,6 +161,10 @@
       span.third::before,
       span.fourth::before {
         width: 100%;
+      }
+
+      span::before {
+        background-color: var(--clr-success-a20);
       }
 
       span:last-of-type::after {

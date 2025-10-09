@@ -9,10 +9,24 @@ import {
 import { Button } from '../button/button';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ValidationErrors as ErrorsMessage, ValidationErrorsType } from '../../errors/validation';
-
 export type InputType = 'text' | 'email' | 'password';
 export type StrengthIndicatorResponse = 'weak' | 'medium' | 'good' | 'strong';
+export type ValidationErrorsType =
+  | 'required'
+  | 'email'
+  | 'minLength'
+  | 'minNumbers'
+  | 'minChar'
+  | 'minEspecial';
+
+export const ValidationErrors: Record<ValidationErrorsType, string> = {
+  email: 'This email is not valid',
+  minChar: "Don't have min characters quantity",
+  minEspecial: "Don't have min especial characters quantity",
+  minLength: "Don't have min length",
+  minNumbers: "Don't have min numbers quantity",
+  required: 'This field is required',
+};
 
 @Component({
   selector: 'app-input',
@@ -65,7 +79,7 @@ export class InputComponent implements ControlValueAccessor {
   onTouched?: () => void;
 
   getErrorMessage(key: ValidationErrorsType) {
-    return ErrorsMessage[key];
+    return ValidationErrors[key];
   }
 
   changeInputVisibility() {
