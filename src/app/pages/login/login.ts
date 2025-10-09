@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Form, FormField } from '../../components/form/form';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Button } from '../../components/button/button';
 
 @Component({
   selector: 'app-login',
-  imports: [Form, RouterLink],
+  imports: [Form, RouterLink, Button],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -26,6 +27,7 @@ export class Login {
       validators: [Validators.required],
     },
   ];
+  form!: FormGroup;
 
   login(data: Record<string, unknown>) {
     console.log(data);

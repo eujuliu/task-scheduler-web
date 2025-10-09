@@ -1,0 +1,39 @@
+:host {
+  --form-gap: 3rem;
+  --form-width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 1rem;
+  margin-top: 15vh;
+  width: 100%;
+
+  .title {
+    font-size: clamp(2.8rem, 4rem, 4.5rem);
+    font-weight: 600;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  :host {
+    --form-width: 80%;
+
+    .title {
+      width: 80%;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :host {
+    --form-width: 50%;
+
+    .title {
+      width: 50%;
+    }
+  }
+}

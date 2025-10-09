@@ -11,6 +11,7 @@
     [disabled]="disabled"
     autocomplete="off"
   />
+
   @if (icon.length) {
   <ion-icon [name]="icon" aria-hidden="true" class="icon"></ion-icon>
   } @else if (type === "password") {
@@ -24,7 +25,18 @@
   }
 </div>
 
-@if (invalid && dirty) {
+@if (type === "password" && value.length > 0) {
+<div
+  class="strength-indicators"
+  [class]="strength()"
+  [style.--strength-indicator]="'\'' + strength() + '\''"
+>
+  <span class="first"></span>
+  <span class="second"></span>
+  <span class="third"></span>
+  <span class="fourth"></span>
+</div>
+} @if (invalid && dirty) {
 <div class="errors">
   @for (key of errors; track idx; let idx = $index) {
   <span class="error">{{ getErrorMessage(key) }}</span>

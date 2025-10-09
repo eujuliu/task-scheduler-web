@@ -6,6 +6,7 @@
       [label]="item.label"
       [type]="item.type"
       [placeholder]="item.placeholder"
+      [validateValueStrength]="item.strengthValidator"
       [invalid]="form.get(item.id)?.invalid ?? true"
       [touched]="form.get(item.id)?.touched ?? false"
       [dirty]="form.get(item.id)?.dirty ?? false"
@@ -14,14 +15,12 @@
     }
   </div>
 
-  <ng-content select="footer">
+  <ng-content select=".submit">
     <app-button
       [type]="'submit'"
       [style]="'normal'"
       [size]="'lg'"
       [disabled]="form.invalid"
-      [style.--btn-bg-color]="'var(--clr-success-a0)'"
-      [style.--btn-bg-hover-color]="'var(--clr-success-a10)'"
       [full]="direction === 'column'"
       >Submit</app-button
     >

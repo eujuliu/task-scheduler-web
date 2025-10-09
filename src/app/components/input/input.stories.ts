@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
-import { InputComponent } from './input';
+import { InputComponent, StrengthIndicatorResponse } from './input';
 import { expect, userEvent } from 'storybook/test';
 
 const meta: Meta<InputComponent> = {
@@ -35,9 +35,32 @@ export const Email: Story = {
 };
 
 export const Password: Story = {
+  argTypes: {
+    validateValueStrength: {
+      type: 'function',
+      control: false,
+    },
+  },
   args: {
     ...Default.args,
     type: 'password',
+    validateValueStrength(value) {
+      let strength = 0;
+      const levels: Record<number, StrengthIndicatorResponse> = {
+        2: 'weak',
+        3: 'medium',
+        4: 'good',
+        5: 'strong',
+      };
+
+      if (value.length > 8) strength += 1;
+      if (/(?=.*?[A-Z])/g.test(value)) strength += 1;
+      if (/(?=.*?[a-z])/g.test(value)) strength += 1;
+      if (/(?=.*?[0-9])/g.test(value)) strength += 1;
+      if (/(?=.*?[#?!@$%^&*-])/g.test(value)) strength += 1;
+
+      return levels[strength] ?? '';
+    },
   },
   play: async ({ canvas, canvasElement }) => {
     await userEvent.type(canvas.getByPlaceholderText(Default.args?.placeholder ?? ''), '123456789');
