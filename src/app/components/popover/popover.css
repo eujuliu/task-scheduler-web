@@ -1,0 +1,16 @@
+:host {
+  .popover-content {
+    position-anchor: var(--popover-anchor, --anchor);
+    top: anchor(var(--anchor-top-position, bottom));
+    left: anchor(var(--anchor-left-position, left));
+
+    border: 0;
+    background-color: var(--background-color, var(--clr-surface-a0));
+    /*padding: 0.5rem;*/
+    border-radius: 5px;
+
+    box-shadow: var(--box-shadow);
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+  }
+}
