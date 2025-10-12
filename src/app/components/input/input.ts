@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Button } from '../button/button';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { randomString } from '../../shared/services/helpers.service';
 
 export type InputType = 'text' | 'email' | 'password';
 export type StrengthIndicatorResponse = 'weak' | 'medium' | 'good' | 'strong';
@@ -44,9 +45,9 @@ export const ValidationErrors: Record<ValidationErrorsType, string> = {
 })
 export class InputComponent implements ControlValueAccessor {
   @Input({ required: false }) type: InputType = 'text';
-  @Input({ required: false }) label = '';
+  @Input({ required: false }) label?: string;
   @Input({ required: false, transform: (val: string) => val.trim() }) placeholder = '';
-  @Input({ required: false }) icon = '';
+  @Input({ required: false }) icon?: string;
 
   @Input({ required: false }) invalid = false;
   @Input({ required: false }) touched = false;
@@ -70,7 +71,9 @@ export class InputComponent implements ControlValueAccessor {
 
   showPassword = signal(false);
 
-  formattedLabel = computed(() => this.label.toLowerCase().trim().replaceAll(' ', '-'));
+  id = computed(() =>
+    this.label ? this.label.toLowerCase().trim().replaceAll(' ', '-') : `input-${randomString(5)}`,
+  );
   inputType = computed(() =>
     this.type !== 'password' ? this.type : this.showPassword() ? 'text' : 'password',
   );
