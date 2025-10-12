@@ -1,6 +1,6 @@
 :host {
   .popover-content {
-    position-anchor: var(--popover-anchor, --anchor);
+    position-anchor: var(--anchor, --anchor);
     top: anchor(var(--anchor-top-position, bottom));
     left: anchor(var(--anchor-left-position, left));
 

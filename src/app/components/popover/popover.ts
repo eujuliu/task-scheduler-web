@@ -8,13 +8,13 @@ import { randomString } from '../../shared/services/helpers.service';
   templateUrl: './popover.html',
   styleUrl: './popover.css',
   host: {
-    '[style.--popover-anchor]': 'anchor',
+    '[style.--anchor]': 'anchor || id()',
     '[style.--anchor-top-position]': 'offsetY',
     '[style.--anchor-left-position]': 'offsetX',
   },
 })
 export class PopOver implements AfterViewInit {
-  @Input({ required: false }) anchor = '--anchor';
+  @Input({ required: false }) anchor = '';
   @Input({ required: false }) offsetY: 'top' | 'center' | 'bottom' = 'top';
   @Input({ required: false }) offsetX: 'left' | 'center' | 'right' = 'left';
 

@@ -1,4 +1,13 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, signal, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  EventEmitter,
+  Input,
+  Output,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { PopOver } from '../popover/popover';
 import { Button } from '../button/button';
 import { ResizeDirective } from '../../shared/directives/resize.directive';
@@ -20,22 +29,31 @@ export interface SelectOption {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   host: {
     '[style.--select-content-width]': 'contentWidth()',
+    '[style.--select-trigger-width]': 'maxTriggerWidth',
   },
 })
-export class Select implements ControlValueAccessor {
+export class Select implements ControlValueAccessor, AfterViewInit {
   @Input({ required: true }) options!: SelectOption[];
+  @Input({ required: false }) defaultValue = '';
+  @Input({ required: false }) maxTriggerWidth?: string;
+
+  @Output() changed = new EventEmitter<string>();
 
   @ViewChild('popover') popover: PopOver | undefined;
 
   contentWidth = signal('fit-content');
-  showTopArrow = signal(true);
-  showBottomArrow = signal(true);
+  showTopArrow = signal(false);
+  showBottomArrow = signal(false);
 
-  protected value = '';
+  protected value = this.defaultValue;
   protected disabled = false;
 
   onChanged?: (value: unknown) => void;
   onTouched?: () => void;
+
+  ngAfterViewInit(): void {
+    this.writeValue(this.defaultValue);
+  }
 
   updateTriggerWidth(width: number) {
     this.contentWidth.update(() => `${width + 16}px`);
@@ -65,6 +83,8 @@ export class Select implements ControlValueAccessor {
       if (this.onTouched) this.onTouched();
 
       if (this.popover) this.popover.close();
+
+      this.changed.emit(option.value);
     }
   }
 

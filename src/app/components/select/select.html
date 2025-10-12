@@ -2,14 +2,16 @@
   [offsetY]="'bottom'"
   [offsetX]="'left'"
   [buttonStyle]="'outline'"
-  [style.--background-color]="'transparent'"
   [disabled]="disabled"
   #popover
 >
   <div class="trigger select-trigger" appResize (resizeEl)="updateTriggerWidth($event.width)">
-    {{ value || "Select a item" }}
-    <ion-icon name="chevron-down-outline" />
+    <ng-content select=".trigger">
+      {{ value || "Select a item" }}
+      <ion-icon name="chevron-down-outline" />
+    </ng-content>
   </div>
+
   <div class="options-wrapper">
     <span class="scroll-indicator">
       @if (showTopArrow()) {

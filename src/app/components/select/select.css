@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    width: var(--select-trigger-width, 180px);
 
     ion-icon {
       font-size: 1.6rem;
@@ -59,7 +60,7 @@
 @media screen and (min-width: 768px) {
   :host {
     .select-trigger {
-      min-width: 180px;
+      width: var(--select-trigger-width, 180px);
     }
   }
 }

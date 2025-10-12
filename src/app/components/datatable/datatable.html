@@ -1,0 +1,96 @@
+<div class="table-wrapper">
+  <div class="table">
+    <table class="datatable">
+      <thead>
+        <tr>
+          @for (col of cols(); track col) {
+          <th [class]="col">
+            @if (columns[col].sort) {
+            <app-popover [offsetY]="'bottom'" [buttonStyle]="'ghost'">
+              <div class="trigger popover-trigger">
+                {{ columns[col].label }}
+                <ion-icon [name]="getSortIcon(col)"></ion-icon>
+              </div>
+              <div class="sort-options">
+                <app-button
+                  [style]="'ghost'"
+                  [full]="true"
+                  [size]="'lg'"
+                  [style.--btn-justify]="'flex-start'"
+                  [style.--btn-max-height]="'34px'"
+                  [style.--btn-bg-color]="col === sorting().col && sorting().asc ? 'var(--clr-surface-a10)' : ''"
+                  (click)="setSort(col, true)"
+                >
+                  <ion-icon name="arrow-up-outline"></ion-icon>
+                  Asc
+                </app-button>
+                <app-button
+                  [style]="'ghost'"
+                  [full]="true"
+                  [size]="'lg'"
+                  [style.--btn-justify]="'flex-start'"
+                  [style.--btn-max-height]="'34px'"
+                  [style.--btn-bg-color]="col === sorting().col && !sorting().asc ? 'var(--clr-surface-a10)' : ''"
+                  (click)="setSort(col, false)"
+                >
+                  <ion-icon name="arrow-down-outline"></ion-icon>
+                  Desc
+                </app-button>
+              </div>
+            </app-popover>
+            } @else { {{ columns[col].label }} }
+          </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of sortedData()[page() - 1]; track getTrackRow(row)) {
+        <tr>
+          @for (col of getColumns(row); track idx; let idx = $index) {
+          <td [class]="col[0]">{{ transform(col[1], columns[idCol].transform) }}</td>
+          }
+        </tr>
+        } @empty {
+        <tr>
+          <td [attr.colspan]="cols().length" class="no-results">No results</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="footer">
+  <div class="total">Total: {{ total }}</div>
+  <div class="pagination">
+    <div class="rows-per-page">
+      Rows per page
+      <app-select
+        [defaultValue]="itemsPerPage()"
+        [options]="itemsPerPageOptions"
+        [style.--popover-anchor]="'--select-per-page-items'"
+        [maxTriggerWidth]="'50px'"
+        (changed)="setItemsPerPage($event)"
+      />
+    </div>
+    <div class="pages">Page {{ page() }} of {{ pageTotal() }}</div>
+    <app-button
+      [type]="'button'"
+      [style]="'outline'"
+      [size]="'lg'"
+      [disabled]="!hasPrevious()"
+      (click)="previousPage()"
+    >
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </app-button>
+
+    <app-button
+      [type]="'button'"
+      [style]="'outline'"
+      [size]="'lg'"
+      [disabled]="!hasNext()"
+      (click)="nextPage()"
+    >
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </app-button>
+  </div>
+</div>
