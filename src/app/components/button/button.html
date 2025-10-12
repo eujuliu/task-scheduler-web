@@ -1,3 +1,10 @@
-<button [type]="type" [class]="`${style} ${size} ${full && 'full'}`" [disabled]="disabled">
-  <ng-content />
+<button
+  [type]="type"
+  [class]="style + ' ' + size + ' ' + (full ? 'full' : '')"
+  [attr.disabled]="disabled ? 'disabled' : null"
+  [attr.popovertarget]="popovertarget"
+  aria-label="Button"
+  [attr.aria-disabled]="disabled"
+>
+  <ng-content>Click</ng-content>
 </button>

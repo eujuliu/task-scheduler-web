@@ -11,9 +11,10 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
   imports: [],
 })
 export class Button {
-  @Input({ required: true }) type: ButtonType = 'button';
-  @Input({ required: true }) style: ButtonStyle = 'normal';
+  @Input({ required: false }) type: ButtonType = 'button';
+  @Input({ required: false }) style: ButtonStyle = 'normal';
   @Input({ required: false }) size: ButtonSize = 'md';
   @Input({ required: false }) disabled = false;
   @Input({ required: false }) full = false;
+  @Input({ required: false }) popovertarget = '';
 }
