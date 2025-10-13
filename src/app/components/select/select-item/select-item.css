@@ -4,11 +4,16 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    gap: 1rem;
 
-    span {
+    .content {
       display: flex;
       align-items: center;
       gap: 1rem;
+    }
+
+    .selected-icon {
+      width: 14px;
     }
   }
 }

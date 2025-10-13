@@ -1,11 +1,12 @@
 <app-button
-  [ariaExpanded]="opened"
+  [ariaExpanded]="opened()"
   [role]="'combobox'"
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
-  [class.open]="opened"
-  (click)="opened = !opened"
-  [style]="'outline'"
+  [class.open]="opened()"
+  (click)="open(!opened())"
+  [style]="buttonStyle"
+  [ariaControls]="id"
 >
   <div class="select-trigger" appResize (resizeEl)="updateTriggerWidth($event.width)">
     <ng-content select=".trigger">
@@ -18,10 +19,9 @@
 <ng-template
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="trigger"
-  [cdkConnectedOverlayOpen]="opened"
-  (overlayOutsideClick)="opened = false"
-  [cdkConnectedOverlayPanelClass]="'select-content'"
-  [cdkConnectedOverlayWidth]="contentWidth()"
+  [cdkConnectedOverlayOpen]="opened()"
+  (overlayOutsideClick)="open(false)"
+  [cdkConnectedOverlayMinWidth]="contentWidth()"
 >
   <ng-content />
 </ng-template>

@@ -4,7 +4,6 @@ import {
   ContentChildren,
   CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
-  Input,
   OnDestroy,
   QueryList,
   signal,
@@ -18,14 +17,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './select-content.html',
   styleUrl: './select-content.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  host: {
-    '[style.--slc-content-width]': 'width',
-  },
 })
 export class SelectContent implements AfterContentInit, OnDestroy {
   @ContentChildren(SelectItem) items!: QueryList<SelectItem>;
-
-  @Input({ required: false }) width = '100%';
 
   showTopArrow = signal(false);
   showBottomArrow = signal(false);

@@ -39,5 +39,6 @@ export const Selected: Story = {
     value: 'test',
     icon: 'heart',
     key: 'test',
+    selected: 'test',
   },
 };

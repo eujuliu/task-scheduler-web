@@ -1,15 +1,6 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  EventEmitter,
-  inject,
-  Input,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, signal } from '@angular/core';
 import { Button } from '../../button/button';
 import { VisibilityDirective } from '../../../shared/directives/visible.directive';
-import { CommunicationService } from '../../../shared/services/communication.service';
 
 export interface SelectOption {
   key: string;
@@ -25,9 +16,10 @@ export interface SelectOption {
   styleUrl: './select-item.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SelectItem implements OnInit {
+export class SelectItem {
   @Input({ required: false }) label!: string;
   @Input({ required: false }) value = '';
+  @Input({ required: false }) selected = '';
   @Input({ required: false }) icon?: string;
   @Input({ required: true }) key!: string;
 
@@ -35,12 +27,6 @@ export class SelectItem implements OnInit {
   readonly evident = new EventEmitter<boolean>();
 
   checkVisibility = signal(false);
-  selected = signal('');
-  communicationService = inject(CommunicationService);
-
-  ngOnInit(): void {
-    this.communicationService.data.subscribe((data) => this.selected.set(data as string));
-  }
 
   select() {
     this.change.emit();

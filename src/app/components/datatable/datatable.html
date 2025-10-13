@@ -6,38 +6,33 @@
           @for (col of cols(); track col) {
           <th [class]="col">
             @if (columns[col].sort) {
-            <app-popover [offsetY]="'bottom'" [buttonStyle]="'ghost'">
-              <div class="trigger popover-trigger">
+            <app-select
+              [model]="sortValue()"
+              [defaultValue]="defaultSortCol + '-asc'"
+              [width]="'fit-content'"
+              [buttonStyle]="'ghost'"
+              (changed)="setSort($event)"
+            >
+              <div class="trigger sort-trigger">
                 {{ columns[col].label }}
                 <ion-icon [name]="getSortIcon(col)"></ion-icon>
               </div>
-              <div class="sort-options">
-                <app-button
-                  [style]="'ghost'"
-                  [full]="true"
-                  [size]="'lg'"
-                  [style.--btn-justify]="'flex-start'"
-                  [style.--btn-max-height]="'34px'"
-                  [style.--btn-bg-color]="col === sorting().col && sorting().asc ? 'var(--clr-surface-a10)' : ''"
-                  (click)="setSort(col, true)"
-                >
-                  <ion-icon name="arrow-up-outline"></ion-icon>
-                  Asc
-                </app-button>
-                <app-button
-                  [style]="'ghost'"
-                  [full]="true"
-                  [size]="'lg'"
-                  [style.--btn-justify]="'flex-start'"
-                  [style.--btn-max-height]="'34px'"
-                  [style.--btn-bg-color]="col === sorting().col && !sorting().asc ? 'var(--clr-surface-a10)' : ''"
-                  (click)="setSort(col, false)"
-                >
-                  <ion-icon name="arrow-down-outline"></ion-icon>
-                  Desc
-                </app-button>
-              </div>
-            </app-popover>
+
+              <app-select-content>
+                <app-select-item
+                  [icon]="'arrow-up-outline'"
+                  [label]="'Asc'"
+                  [value]="col + '-asc'"
+                  [key]="col + '-asc'"
+                />
+                <app-select-item
+                  [icon]="'arrow-down-outline'"
+                  [label]="'Desc'"
+                  [value]="col + '-desc'"
+                  [key]="col + '-desc'"
+                />
+              </app-select-content>
+            </app-select>
             } @else { {{ columns[col].label }} }
           </th>
           }

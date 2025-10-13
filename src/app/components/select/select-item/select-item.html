@@ -5,7 +5,7 @@
   [size]="'lg'"
   [style.--btn-max-height]="'34px'"
   [style.--btn-justify]="'flex-start'"
-  [style.--btn-bg-color]="selected() === value ? 'var(--clr-surface-a10)' : ''"
+  [style.--btn-bg-color]="selected === value ? 'var(--clr-surface-a10)' : ''"
   (click)="select()"
   appVisibility
   [checkVisibility]="checkVisibility()"
@@ -13,15 +13,17 @@
 >
   <ng-content>
     <span class="option">
-      <span>
+      <span class="content">
         @if (icon) {
         <ion-icon [name]="icon" />
         } {{ label }}
       </span>
 
-      @if (selected() === value) {
-      <ion-icon name="checkmark-outline" />
-      }
+      <span class="selected-icon">
+        @if (selected === value) {
+        <ion-icon name="checkmark-outline" />
+        }
+      </span>
     </span>
   </ng-content>
 </app-button>

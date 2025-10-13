@@ -42,13 +42,13 @@ export const Default: Story = {
         <app-select-item [label]="'Test 2'" [value]="'test2'" [key]="'2'" />
         <app-select-item [label]="'Test 3'" [value]="'test3'" [key]="'3'" />
         <app-select-item [label]="'Test 4'" [value]="'test4'" [key]="'4'" />
-        <app-select-item [label]="'Test 4'" [value]="'test5'" [key]="'4'" />
-        <app-select-item [label]="'Test 4'" [value]="'test6'" [key]="'4'" />
-        <app-select-item [label]="'Test 4'" [value]="'test7'" [key]="'4'" />
-        <app-select-item [label]="'Test 4'" [value]="'test8'" [key]="'4'" />
-        <app-select-item [label]="'Test 4'" [value]="'test9'" [key]="'4'" />
-        <app-select-item [label]="'Test 4'" [value]="'test10'" [key]="'4'" />
-        <app-select-item [label]="'Test 4'" [value]="'test11'" [key]="'4'" />
+        <app-select-item [label]="'Test 5'" [value]="'test5'" [key]="'5'" />
+        <app-select-item [label]="'Test 6'" [value]="'test6'" [key]="'6'" />
+        <app-select-item [label]="'Test 7'" [value]="'test7'" [key]="'7'" />
+        <app-select-item [label]="'Test 8'" [value]="'test8'" [key]="'8'" />
+        <app-select-item [label]="'Test 9'" [value]="'test9'" [key]="'9'" />
+        <app-select-item [label]="'Test 10'" [value]="'test10'" [key]="'10'" />
+        <app-select-item [label]="'Test 11'" [value]="'test11'" [key]="'11'" />
       </app-select-content>
     </app-select>
     `,

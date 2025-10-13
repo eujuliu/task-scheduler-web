@@ -9,7 +9,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Button } from '../button/button';
-import { PopOver } from '../popover/popover';
 import { isISODate } from '../../shared/services/helpers.service';
 import { Select } from '../select/select';
 import { SelectItem, SelectOption } from '../select/select-item/select-item';
@@ -32,7 +31,7 @@ export interface LoadItems {
 
 @Component({
   selector: 'app-datatable',
-  imports: [PopOver, Button, Select, SelectContent, SelectItem],
+  imports: [Button, Select, SelectContent, SelectItem],
   templateUrl: './datatable.html',
   styleUrl: './datatable.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -51,6 +50,7 @@ export class DataTable {
   page = signal(1);
   sorting = signal({ col: this.defaultSortCol, asc: true });
 
+  sortValue = computed(() => `${this.sorting().col}-${this.sorting().asc ? 'asc' : 'desc'}`);
   pageTotal = computed(() => Math.ceil(this.total / this.itemsPerPage()) || 1);
   cols = computed(() => Object.keys(this.columns));
 
@@ -145,8 +145,9 @@ export class DataTable {
     return 'swap-vertical-outline';
   }
 
-  setSort(col: string, asc: boolean) {
-    this.sorting.update(() => ({ col, asc }));
+  setSort(value: string) {
+    const [col, order] = value.split('-');
+    this.sorting.update(() => ({ col, asc: !!order.match(/asc/) }));
   }
 
   transform(value: unknown, fn?: (value: unknown) => string) {

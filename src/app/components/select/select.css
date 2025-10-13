@@ -1,5 +1,6 @@
 :host {
   width: fit-content;
+  display: block;
 
   .select-trigger {
     display: flex;
