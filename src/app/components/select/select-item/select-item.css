@@ -1,0 +1,14 @@
+:host {
+  .option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+}

@@ -10,12 +10,12 @@ const meta: Meta<DataTable> = {
   tags: ['autodocs'],
 };
 
-function generateData() {
+function generateData(length = 100) {
   const status = ['RUNNING', 'PENDING', 'COMPLETED', 'FAILED'];
   const startDate = new Date(2026, 0, 1);
   const endDate = new Date(2028, 0, 1);
 
-  return Array.from({ length: Math.random() * 100 }, (_, idx) => {
+  return Array.from({ length }, (_, idx) => {
     const randomDate = new Date(
       startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()),
     );

@@ -11,7 +11,9 @@ import {
 import { Button } from '../button/button';
 import { PopOver } from '../popover/popover';
 import { isISODate } from '../../shared/services/helpers.service';
-import { Select, SelectOption } from '../select/select';
+import { Select } from '../select/select';
+import { SelectItem, SelectOption } from '../select/select-item/select-item';
+import { SelectContent } from '../select/select-content/select-content';
 
 export type Columns = Record<
   string,
@@ -30,7 +32,7 @@ export interface LoadItems {
 
 @Component({
   selector: 'app-datatable',
-  imports: [PopOver, Button, Select],
+  imports: [PopOver, Button, Select, SelectContent, SelectItem],
   templateUrl: './datatable.html',
   styleUrl: './datatable.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -92,32 +94,32 @@ export class DataTable {
 
   itemsPerPageOptions: SelectOption[] = [
     {
-      id: '1',
+      key: '1',
       label: '10',
       value: '10',
     },
     {
-      id: '2',
+      key: '2',
       label: '20',
       value: '20',
     },
     {
-      id: '3',
+      key: '3',
       label: '25',
       value: '25',
     },
     {
-      id: '4',
+      key: '4',
       label: '30',
       value: '30',
     },
     {
-      id: '5',
+      key: '5',
       label: '40',
       value: '40',
     },
     {
-      id: '6',
+      key: '6',
       label: '50',
       value: '50',
     },

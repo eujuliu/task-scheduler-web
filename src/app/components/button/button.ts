@@ -17,4 +17,6 @@ export class Button {
   @Input({ required: false }) disabled = false;
   @Input({ required: false }) full = false;
   @Input({ required: false }) popovertarget = '';
+  @Input({ required: false }) role?: string;
+  @Input({ required: false }) ariaExpanded?: boolean;
 }

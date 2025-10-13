@@ -1,24 +1,25 @@
-import { type Meta, type StoryObj } from '@storybook/angular';
-import { Select, SelectOption } from './select';
-import { randomString } from '../../shared/services/helpers.service';
+import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import { Select } from './select';
+import { SelectContent } from './select-content/select-content';
+import { SelectItem } from './select-item/select-item';
+import { fn } from 'storybook/internal/test';
 
 const meta: Meta<Select> = {
   title: 'Components/Select',
   component: Select,
   excludeStories: /.*Data$/,
   args: {},
-  argTypes: {},
+  argTypes: {
+    changed: { action: 'click' },
+  },
   tags: ['autodocs'],
+  decorators: [
+    moduleMetadata({
+      imports: [SelectContent, SelectItem],
+    }),
+  ],
+  subcomponents: { SelectContent, SelectItem },
 };
-
-function generateData(): SelectOption[] {
-  return Array.from({ length: Math.random() * 100 }, (_, idx) => ({
-    id: `${idx + 1}`,
-    label: randomString(5),
-    value: randomString(5),
-    icon: Math.round(Math.random() * 1) % 2 === 0 ? 'heart' : undefined,
-  }));
-}
 
 export default meta;
 
@@ -26,6 +27,30 @@ type Story = StoryObj<Select>;
 
 export const Default: Story = {
   args: {
-    options: generateData(),
+    defaultValue: '',
+    changed: fn(),
   },
+  render: (args) => ({
+    props: args,
+    template: `
+    <app-select
+      [defaultValue]="defaultValue"
+      (changed)="changed"
+    >
+      <app-select-content>
+        <app-select-item [label]="'Test 1'" [value]="'test1'" [key]="'1'" />
+        <app-select-item [label]="'Test 2'" [value]="'test2'" [key]="'2'" />
+        <app-select-item [label]="'Test 3'" [value]="'test3'" [key]="'3'" />
+        <app-select-item [label]="'Test 4'" [value]="'test4'" [key]="'4'" />
+        <app-select-item [label]="'Test 4'" [value]="'test5'" [key]="'4'" />
+        <app-select-item [label]="'Test 4'" [value]="'test6'" [key]="'4'" />
+        <app-select-item [label]="'Test 4'" [value]="'test7'" [key]="'4'" />
+        <app-select-item [label]="'Test 4'" [value]="'test8'" [key]="'4'" />
+        <app-select-item [label]="'Test 4'" [value]="'test9'" [key]="'4'" />
+        <app-select-item [label]="'Test 4'" [value]="'test10'" [key]="'4'" />
+        <app-select-item [label]="'Test 4'" [value]="'test11'" [key]="'4'" />
+      </app-select-content>
+    </app-select>
+    `,
+  }),
 };

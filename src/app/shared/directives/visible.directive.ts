@@ -13,15 +13,14 @@ import {
   selector: '[appVisibility]',
 })
 export class VisibilityDirective implements AfterViewInit, OnDestroy {
-  @Input({ required: false }) monitorVisible = false;
+  @Input({ required: false }) checkVisibility = false;
   @Output() readonly visibleChange = new EventEmitter<boolean>();
 
   private readonly el = inject(ElementRef);
   private observer!: IntersectionObserver;
 
   ngAfterViewInit(): void {
-    if (this.monitorVisible) {
-      const container = this.el.nativeElement.parentElement;
+    if (this.checkVisibility) {
       this.observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -29,7 +28,7 @@ export class VisibilityDirective implements AfterViewInit, OnDestroy {
           }
         },
         {
-          root: container,
+          root: document,
           threshold: 1.0,
         },
       );
@@ -38,7 +37,7 @@ export class VisibilityDirective implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.monitorVisible) {
+    if (this.checkVisibility) {
       this.observer?.disconnect();
     }
   }

@@ -1,52 +1,61 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
+  ContentChild,
   CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
+  inject,
   Input,
   Output,
   signal,
-  ViewChild,
 } from '@angular/core';
-import { PopOver } from '../popover/popover';
 import { Button } from '../button/button';
 import { ResizeDirective } from '../../shared/directives/resize.directive';
 import { ControlValueAccessor } from '@angular/forms';
-import { VisibilityDirective } from '../../shared/directives/visible.directive';
 
-export interface SelectOption {
-  id: string;
-  icon?: string;
-  label: string;
-  value: string;
-}
+import { OverlayModule } from '@angular/cdk/overlay';
+import { SelectContent } from './select-content/select-content';
+import { CommunicationService } from '../../shared/services/communication.service';
 
 @Component({
   selector: 'app-select',
-  imports: [PopOver, Button, ResizeDirective, VisibilityDirective],
+  imports: [Button, ResizeDirective, OverlayModule],
   templateUrl: './select.html',
   styleUrl: './select.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   host: {
-    '[style.--select-content-width]': 'contentWidth()',
-    '[style.--select-trigger-width]': 'maxTriggerWidth',
+    '[style.--slc-trigger-width]': 'width',
   },
 })
-export class Select implements ControlValueAccessor, AfterViewInit {
-  @Input({ required: true }) options!: SelectOption[];
+export class Select implements ControlValueAccessor, AfterViewInit, AfterContentInit {
+  @ContentChild(SelectContent) content?: SelectContent;
+
   @Input({ required: false }) defaultValue = '';
-  @Input({ required: false }) maxTriggerWidth?: string;
+  @Input({ required: false }) width?: string;
 
   @Output() changed = new EventEmitter<string>();
 
-  @ViewChild('popover') popover: PopOver | undefined;
-
+  communicationService = inject(CommunicationService);
   contentWidth = signal('fit-content');
-  showTopArrow = signal(false);
-  showBottomArrow = signal(false);
 
-  protected value = this.defaultValue;
+  protected opened = false;
+  protected value = '';
   protected disabled = false;
+
+  ngAfterContentInit() {
+    this.content?.change.subscribe(({ value }) => {
+      if (!this.disabled) {
+        this.writeValue(value);
+
+        if (this.onChanged) this.onChanged(value);
+        if (this.onTouched) this.onTouched();
+
+        this.changed.emit(value);
+        this.opened = false;
+      }
+    });
+  }
 
   onChanged?: (value: unknown) => void;
   onTouched?: () => void;
@@ -61,6 +70,7 @@ export class Select implements ControlValueAccessor, AfterViewInit {
 
   writeValue(value: string) {
     this.value = value;
+    this.communicationService.sendUpdate(value);
   }
 
   registerOnChange(fn: (value: unknown) => void) {
@@ -73,23 +83,5 @@ export class Select implements ControlValueAccessor, AfterViewInit {
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
-  }
-
-  setValue(option: SelectOption) {
-    if (!this.disabled) {
-      this.writeValue(option.value);
-
-      if (this.onChanged) this.onChanged(option.value);
-      if (this.onTouched) this.onTouched();
-
-      if (this.popover) this.popover.close();
-
-      this.changed.emit(option.value);
-    }
-  }
-
-  showingOption(index: number, visible: boolean) {
-    this.showTopArrow.set(!(index === 0 && visible));
-    this.showBottomArrow.set(!(index === this.options.length - 1 && visible));
   }
 }

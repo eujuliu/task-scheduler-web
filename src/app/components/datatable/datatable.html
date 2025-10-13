@@ -65,12 +65,16 @@
     <div class="rows-per-page">
       Rows per page
       <app-select
-        [defaultValue]="itemsPerPage()"
-        [options]="itemsPerPageOptions"
-        [style.--popover-anchor]="'--select-per-page-items'"
-        [maxTriggerWidth]="'50px'"
+        [defaultValue]="itemsPerPage().toString()"
+        [width]="'50px'"
         (changed)="setItemsPerPage($event)"
-      />
+      >
+        <app-select-content>
+          @for (option of itemsPerPageOptions; track option.key) {
+          <app-select-item [label]="option.label" [value]="option.value" [key]="option.key" />
+          }
+        </app-select-content>
+      </app-select>
     </div>
     <div class="pages">Page {{ page() }} of {{ pageTotal() }}</div>
     <app-button
