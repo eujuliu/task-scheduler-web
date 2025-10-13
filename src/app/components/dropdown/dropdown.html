@@ -1,0 +1,25 @@
+<app-button
+  [ariaExpanded]="opened()"
+  [ariaHaspopup]="'menu'"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  [class.open]="opened()"
+  (click)="open(!opened())"
+  [style]="buttonStyle"
+  [size]="buttonSize"
+>
+  <div class="dropdown-trigger">
+    <ng-content select=".trigger"> Open </ng-content>
+  </div>
+</app-button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="opened()"
+  (overlayOutsideClick)="open(false)"
+>
+  <div class="content" role="menu">
+    <ng-content select=".content">Dropdown Content</ng-content>
+  </div>
+</ng-template>

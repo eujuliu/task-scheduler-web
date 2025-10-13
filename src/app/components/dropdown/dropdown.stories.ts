@@ -1,9 +1,9 @@
 import { type Meta, type StoryObj } from '@storybook/angular';
-import { PopOver } from './popover';
+import { Dropdown } from './dropdown';
 
-const meta: Meta<PopOver> = {
-  title: 'Components/PopOver',
-  component: PopOver,
+const meta: Meta<Dropdown> = {
+  title: 'Components/Dropdown',
+  component: Dropdown,
   excludeStories: /.*Data$/,
   args: {},
   argTypes: {},
@@ -12,11 +12,11 @@ const meta: Meta<PopOver> = {
 
 export default meta;
 
-type Story = StoryObj<PopOver>;
+type Story = StoryObj<Dropdown>;
 
 export const Default: Story = {
   args: {
-    offsetY: 'bottom',
-    offsetX: 'left',
+    buttonStyle: 'outline',
+    buttonSize: 'md',
   },
 };

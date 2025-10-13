@@ -1,11 +1,13 @@
 import {
   Component,
   computed,
+  ContentChild,
   CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
   Input,
   Output,
   signal,
+  TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { Button } from '../button/button';
@@ -13,6 +15,8 @@ import { isISODate } from '../../shared/services/helpers.service';
 import { Select } from '../select/select';
 import { SelectItem, SelectOption } from '../select/select-item/select-item';
 import { SelectContent } from '../select/select-content/select-content';
+import { Dropdown } from '../dropdown/dropdown';
+import { NgTemplateOutlet } from '@angular/common';
 
 export type Columns = Record<
   string,
@@ -31,13 +35,15 @@ export interface LoadItems {
 
 @Component({
   selector: 'app-datatable',
-  imports: [Button, Select, SelectContent, SelectItem],
+  imports: [Button, Select, SelectContent, SelectItem, Dropdown, NgTemplateOutlet],
   templateUrl: './datatable.html',
   styleUrl: './datatable.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   encapsulation: ViewEncapsulation.None,
 })
 export class DataTable {
+  @ContentChild('actions') actions?: TemplateRef<unknown>;
+
   @Input({ required: true }) columns: Columns = {};
   @Input({ required: true }) data: Data[] = [];
   @Input({ required: true }) total = 0;
@@ -53,6 +59,7 @@ export class DataTable {
   sortValue = computed(() => `${this.sorting().col}-${this.sorting().asc ? 'asc' : 'desc'}`);
   pageTotal = computed(() => Math.ceil(this.total / this.itemsPerPage()) || 1);
   cols = computed(() => Object.keys(this.columns));
+  haveActions = computed(() => 'actions' in this.columns);
 
   hasPrevious = computed(() => this.page() > 1);
   hasNext = computed(() => this.page() < this.pageTotal());

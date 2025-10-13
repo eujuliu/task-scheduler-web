@@ -8,6 +8,18 @@ const meta: Meta<DataTable> = {
   args: {},
   argTypes: {},
   tags: ['autodocs'],
+  render: (args) => ({
+    props: args,
+    template: `
+    <app-datatable [columns]="columns" [data]="data" [total]="total" [idCol]="idCol">
+      <ng-template #actions let-row="row">
+        {{ row.id }}
+        {{ row.status }}
+        {{ row.createdAt }}
+      </ng-template>
+    </app-datatable>
+    `,
+  }),
 };
 
 function generateData(length = 100) {
@@ -55,6 +67,10 @@ export const Default: Story = {
       updatedAt: {
         label: 'Update At',
         sort: true,
+      },
+      actions: {
+        label: '',
+        sort: false,
       },
     },
     data,

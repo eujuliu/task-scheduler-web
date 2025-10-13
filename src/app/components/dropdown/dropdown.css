@@ -1,0 +1,25 @@
+:host {
+  .dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: var(--dpd-trigger-width, 'fit-content');
+    pointer-events: none;
+
+    ion-icon {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.content {
+  background-color: var(--clr-surface-a0);
+  border: 1px solid var(--clr-surface-a20);
+  border-radius: 5px;
+  padding: 0.5rem;
+
+  box-shadow: var(--box-shadow);
+  -webkit-box-shadow: var(--box-shadow);
+  -moz-box-shadow: var(--box-shadow);
+}
