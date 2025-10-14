@@ -54,7 +54,7 @@
     &.outline {
       background-color: transparent;
       color: var(--clr-primary-a0);
-      border: 1px solid var(--clr-surface-tonal-a20);
+      border: 1px solid var(--clr-surface-a20, #ccc);
 
       &:hover {
         background-color: var(--btn-bg-hover-color, var(--clr-surface-a10));

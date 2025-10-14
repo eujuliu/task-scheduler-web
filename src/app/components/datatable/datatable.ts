@@ -42,7 +42,7 @@ export interface LoadItems {
   encapsulation: ViewEncapsulation.None,
 })
 export class DataTable {
-  @ContentChild('actions') actions?: TemplateRef<unknown>;
+  @ContentChild('actions') actionsTemplate?: TemplateRef<unknown>;
 
   @Input({ required: true }) columns: Columns = {};
   @Input({ required: true }) data: Data[] = [];

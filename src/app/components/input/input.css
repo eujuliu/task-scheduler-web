@@ -10,10 +10,10 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    border: 1px solid var(--clr-surface-tonal-a20);
+    border: 1px solid var(--clr-surface-a20, #ccc);
     padding: 0.5rem 1rem;
     border-radius: 6px;
-    height: 42px;
+    height: 36px;
 
     box-shadow: var(--box-shadow);
     -webkit-box-shadow: var(--box-shadow);

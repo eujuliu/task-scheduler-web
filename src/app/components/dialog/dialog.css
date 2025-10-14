@@ -1,0 +1,29 @@
+.dialog-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  pointer-events: none;
+}
+
+.content {
+  background: var(--clr-surface-a0, white);
+  border: 1px solid var(--clr-surface-a20, #ccc);
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  min-height: 40dvh;
+  min-width: 60dvw;
+  overflow: auto;
+
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    ion-icon {
+      font-size: 1.4rem;
+    }
+  }
+}

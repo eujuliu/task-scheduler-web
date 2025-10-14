@@ -50,7 +50,9 @@
                 <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
               </div>
               <div class="content">
-                <ng-container *ngTemplateOutlet="actions; context:{row: row}"></ng-container>
+                <ng-container
+                  *ngTemplateOutlet="actionsTemplate; context:{row: row}"
+                ></ng-container>
               </div>
             </app-dropdown>
           </td>

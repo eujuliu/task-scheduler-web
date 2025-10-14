@@ -15,11 +15,11 @@
   @if (icon) {
   <ion-icon [name]="icon" aria-hidden="true" class="icon"></ion-icon>
   } @else if (type === "password") {
-  <app-button [type]="'button'" [style]="'ghost'" [size]="'lg'" (click)="changeInputVisibility()">
+  <app-button [type]="'button'" [style]="'ghost'" [size]="'md'" (click)="changeInputVisibility()">
     <ion-icon
       [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"
       [attr.aria-label]="showPassword() ? 'hidden' : 'show'"
-      [style.font-size]="'2rem'"
+      [style.font-size]="'1.8rem'"
     ></ion-icon>
   </app-button>
   }
