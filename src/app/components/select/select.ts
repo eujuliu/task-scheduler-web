@@ -1,11 +1,12 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   Component,
   ContentChild,
   CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
+  inject,
   Input,
+  OnDestroy,
   Output,
   signal,
 } from '@angular/core';
@@ -16,6 +17,8 @@ import { ControlValueAccessor } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SelectContent } from './select-content/select-content';
 import { randomString } from '../../shared/services/helpers.service';
+import { Subscription } from 'rxjs';
+import { SelectService } from '../../shared/services/select.service';
 
 @Component({
   selector: 'app-select',
@@ -25,22 +28,18 @@ import { randomString } from '../../shared/services/helpers.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   host: {
     '[style.--slc-trigger-width]': 'width',
+    '[attr.data-id]': 'id()',
   },
 })
-export class Select implements ControlValueAccessor, AfterViewInit, AfterContentInit {
+export class Select implements ControlValueAccessor, OnDestroy, AfterViewInit {
   @ContentChild(SelectContent) content?: SelectContent;
 
-  @Input({ required: false }) defaultValue = '';
+  @Input({ required: false }) defaultValue?: string;
   @Input({ required: false }) width?: string;
   @Input({ required: false }) buttonStyle: ButtonStyle = 'outline';
   @Input({ required: false })
-  set model(val: string) {
-    this._selected.set(val);
-    this.updateItemsSelectedValue(val);
-  }
-
-  get model() {
-    return this._selected();
+  set group(value: string) {
+    this.id.set(value);
   }
 
   @Output() changed = new EventEmitter<string>();
@@ -48,31 +47,32 @@ export class Select implements ControlValueAccessor, AfterViewInit, AfterContent
   contentWidth = signal('fit-content');
   opened = signal(false);
 
-  private _selected = signal('');
+  value = signal('');
+  disabled = signal(false);
 
-  protected value = '';
-  protected disabled = false;
-  protected id = `slc-${randomString(8)}`;
+  id = signal(`slc-${randomString(8)}`);
 
-  ngAfterContentInit() {
-    this.content?.change.subscribe(({ value }) => {
-      if (!this.disabled) {
-        this.writeValue(value);
-
-        if (this.onChanged) this.onChanged(value);
-        if (this.onTouched) this.onTouched();
-
-        this.changed.emit(value);
-        this.opened.set(false);
-      }
-    });
-  }
+  sub!: Subscription;
+  svc = inject(SelectService);
 
   onChanged?: (value: unknown) => void;
   onTouched?: () => void;
 
   ngAfterViewInit(): void {
-    this.writeValue(this.defaultValue);
+    this.sub = this.svc.get(this.id()).subscribe((value) => {
+      if (!this.disabled()) {
+        this.writeValue(value as string);
+
+        if (this.onChanged) this.onChanged(value);
+        if (this.onTouched) this.onTouched();
+
+        this.changed.emit(value as string);
+        this.opened.set(false);
+      }
+    });
+
+    this.content?.setId(this.id());
+    if (this.defaultValue) this.svc.set(this.id(), this.defaultValue);
   }
 
   updateTriggerWidth(width: number) {
@@ -80,8 +80,7 @@ export class Select implements ControlValueAccessor, AfterViewInit, AfterContent
   }
 
   writeValue(value: string) {
-    this.value = value;
-    this.updateItemsSelectedValue(value);
+    this.value.set(value);
   }
 
   registerOnChange(fn: (value: unknown) => void) {
@@ -93,16 +92,15 @@ export class Select implements ControlValueAccessor, AfterViewInit, AfterContent
   }
 
   setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
+    this.disabled.set(isDisabled);
   }
 
   open(v: boolean) {
     this.opened.set(v);
   }
 
-  updateItemsSelectedValue(val: string) {
-    this.content?.items.forEach((item) => {
-      item.selected = val;
-    });
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+    this.svc.destroy(this.id());
   }
 }

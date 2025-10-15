@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Directive,
@@ -7,6 +8,7 @@ import {
   Input,
   OnDestroy,
   Output,
+  PLATFORM_ID,
 } from '@angular/core';
 
 @Directive({
@@ -18,9 +20,10 @@ export class VisibilityDirective implements AfterViewInit, OnDestroy {
 
   private readonly el = inject(ElementRef);
   private observer!: IntersectionObserver;
+  private platformId = inject(PLATFORM_ID);
 
   ngAfterViewInit(): void {
-    if (this.checkVisibility) {
+    if (this.checkVisibility && isPlatformBrowser(this.platformId)) {
       this.observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -37,7 +40,7 @@ export class VisibilityDirective implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.checkVisibility) {
+    if (this.observer) {
       this.observer?.disconnect();
     }
   }

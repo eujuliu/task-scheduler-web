@@ -48,7 +48,7 @@ export class DataTable {
   @Input({ required: true }) data: Data[] = [];
   @Input({ required: true }) total = 0;
   @Input({ required: true, transform: (val: string) => val.trim() }) idCol!: string;
-  @Input({ required: true }) defaultSortCol = 'updatedAt';
+  @Input({ required: false }) defaultSortCol = 'updatedAt';
 
   @Output() getMore = new EventEmitter<LoadItems>();
 
@@ -101,32 +101,26 @@ export class DataTable {
 
   itemsPerPageOptions: SelectOption[] = [
     {
-      key: '1',
       label: '10',
       value: '10',
     },
     {
-      key: '2',
       label: '20',
       value: '20',
     },
     {
-      key: '3',
       label: '25',
       value: '25',
     },
     {
-      key: '4',
       label: '30',
       value: '30',
     },
     {
-      key: '5',
       label: '40',
       value: '40',
     },
     {
-      key: '6',
       label: '50',
       value: '50',
     },
@@ -134,10 +128,6 @@ export class DataTable {
 
   setItemsPerPage(num: string) {
     this.itemsPerPage.set(Number(num));
-  }
-
-  getColumns(row: Data) {
-    return Object.entries(row);
   }
 
   getTrackRow(row: Data) {

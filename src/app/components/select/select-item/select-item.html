@@ -5,7 +5,7 @@
   [size]="'lg'"
   [style.--btn-max-height]="'34px'"
   [style.--btn-justify]="'flex-start'"
-  [style.--btn-bg-color]="selected === value ? 'var(--clr-surface-a10)' : ''"
+  [style.--btn-bg-color]="selected() ? 'var(--clr-surface-a10)' : ''"
   (click)="select()"
   appVisibility
   [checkVisibility]="checkVisibility()"
@@ -20,7 +20,7 @@
       </span>
 
       <span class="selected-icon">
-        @if (selected === value) {
+        @if (selected()) {
         <ion-icon name="checkmark-outline" />
         }
       </span>

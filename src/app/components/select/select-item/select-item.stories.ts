@@ -18,9 +18,7 @@ export const Default: Story = {
   args: {
     label: 'Test',
     value: 'test',
-
     icon: '',
-    key: 'test',
   },
 };
 
@@ -29,16 +27,5 @@ export const WithIcon: Story = {
     label: 'Test',
     value: 'test',
     icon: 'heart',
-    key: 'test',
-  },
-};
-
-export const Selected: Story = {
-  args: {
-    label: 'Test',
-    value: 'test',
-    icon: 'heart',
-    key: 'test',
-    selected: 'test',
   },
 };

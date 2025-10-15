@@ -6,11 +6,12 @@
   [class.open]="opened()"
   (click)="open(!opened())"
   [style]="buttonStyle"
-  [ariaControls]="id"
+  [ariaControls]="id()"
+  [disabled]="disabled()"
 >
   <div class="select-trigger" appResize (resizeEl)="updateTriggerWidth($event.width)">
     <ng-content select=".trigger">
-      {{ value || "Select a item" }}
+      {{ value() || "Select a item" }}
       <ion-icon name="chevron-down-outline" />
     </ng-content>
   </div>

@@ -34,18 +34,16 @@ export class SelectContent implements AfterContentInit, OnDestroy {
     this.subs.push(this.items.first.evident.subscribe((value) => this.showTopArrow.set(!value)));
     this.subs.push(this.items.last.evident.subscribe((value) => this.showBottomArrow.set(!value)));
 
-    this.items.forEach((item) => {
-      this.subs.push(item.change.subscribe(() => this.change.emit(item)));
-    });
-
     this.items.changes.subscribe(() => {
       this.cleanup();
       this.ngAfterContentInit();
     });
   }
 
-  ngOnDestroy() {
-    this.cleanup();
+  setId(id: string) {
+    this.items.forEach((item) => {
+      item.setId(id);
+    });
   }
 
   private cleanup() {
@@ -53,5 +51,9 @@ export class SelectContent implements AfterContentInit, OnDestroy {
       s.unsubscribe();
     });
     this.subs = [];
+  }
+
+  ngOnDestroy() {
+    this.cleanup();
   }
 }

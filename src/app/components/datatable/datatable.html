@@ -4,14 +4,14 @@
       <thead>
         <tr>
           @for (col of cols(); track col) {
-          <th [class]="col" colspan="1">
+          <th [class]="col">
             @if (columns[col].sort) {
             <app-select
-              [model]="sortValue()"
               [defaultValue]="defaultSortCol + '-asc'"
               [width]="'fit-content'"
               [buttonStyle]="'ghost'"
               (changed)="setSort($event)"
+              [group]="'dataTableThSelect'"
             >
               <div class="trigger sort-trigger">
                 {{ columns[col].label }}
@@ -23,13 +23,11 @@
                   [icon]="'arrow-up-outline'"
                   [label]="'Asc'"
                   [value]="col + '-asc'"
-                  [key]="col + '-asc'"
                 />
                 <app-select-item
                   [icon]="'arrow-down-outline'"
                   [label]="'Desc'"
                   [value]="col + '-desc'"
-                  [key]="col + '-desc'"
                 />
               </app-select-content>
             </app-select>
@@ -41,8 +39,10 @@
       <tbody>
         @for (row of sortedData()[page() - 1]; track getTrackRow(row)) {
         <tr>
-          @for (col of getColumns(row); track idx; let idx = $index) {
-          <td [class]="col[0]">{{ transform(col[1], columns[col[0]].transform) }}</td>
+          @for (col of cols(); track idx; let idx = $index) {
+          <td [class]="col" [attr.data-value]="row[col]">
+            {{ transform(row[col], columns[col]?.transform) }}
+          </td>
           } @if (haveActions()) {
           <td class="actions">
             <app-dropdown [buttonSize]="'sm'" [buttonStyle]="'ghost'">
@@ -78,8 +78,8 @@
         (changed)="setItemsPerPage($event)"
       >
         <app-select-content>
-          @for (option of itemsPerPageOptions; track option.key) {
-          <app-select-item [label]="option.label" [value]="option.value" [key]="option.key" />
+          @for (option of itemsPerPageOptions; track option.value) {
+          <app-select-item [label]="option.label" [value]="option.value" />
           }
         </app-select-content>
       </app-select>

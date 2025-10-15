@@ -14,3 +14,19 @@ export function isISODate(value: unknown): boolean {
 
   return false;
 }
+
+export function toLocalDateString(value: string, showTime = false, locale = 'en-US') {
+  const date = new Date(value);
+
+  const timeConfig: Intl.DateTimeFormatOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+
+  return new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    ...(showTime ? timeConfig : {}),
+  }).format(date);
+}
