@@ -41,7 +41,11 @@
         <tr>
           @for (col of cols(); track idx; let idx = $index) {
           <td [class]="col" [attr.data-value]="row[col]">
-            {{ transform(row[col], columns[col]?.transform) }}
+            <ng-container
+              *ngTemplateOutlet="columns[col]?.template || defaultTemplate; context: {$implicit: row, column: col, value: row[col]}"
+            />
+
+            <ng-template #defaultTemplate let-value="value"> {{ value }} </ng-template>
           </td>
           } @if (haveActions()) {
           <td class="actions">

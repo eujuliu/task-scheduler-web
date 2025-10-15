@@ -22,8 +22,8 @@ export type Columns = Record<
   string,
   {
     label: string;
-    transform?: (value: unknown) => string;
     sort?: boolean;
+    template?: TemplateRef<unknown>;
   }
 >;
 export type Data = Record<string, string | number>;
@@ -147,31 +147,23 @@ export class DataTable {
     this.sorting.update(() => ({ col, asc: !!order.match(/asc/) }));
   }
 
-  transform(value: unknown, fn?: (value: unknown) => string) {
-    if (typeof fn === 'function') {
-      return fn(value);
-    }
-
-    return value;
-  }
-
-  getPageRange() {
-    const start = (this.page() - 1) * this.itemsPerPage() + 1;
+  getPageRange(page: number) {
+    const start = (page - 1) * this.itemsPerPage() + 1;
     const end = Math.min(this.page() * this.itemsPerPage(), this.total);
     return { start, end };
   }
 
   previousPage() {
     if (this.hasPrevious()) {
-      this.getMore.emit(this.getPageRange());
       this.page.update((val) => val - 1);
+      this.getMore.emit(this.getPageRange(this.page()));
     }
   }
 
   nextPage() {
     if (this.hasNext()) {
-      this.getMore.emit(this.getPageRange());
       this.page.update((val) => val + 1);
+      this.getMore.emit(this.getPageRange(this.page()));
     }
   }
 }
