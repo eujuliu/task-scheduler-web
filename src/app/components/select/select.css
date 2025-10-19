@@ -1,0 +1,25 @@
+:host {
+  width: fit-content;
+  display: block;
+
+  .select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: var(--slc-trigger-width, 180px);
+    pointer-events: none;
+
+    ion-icon {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :host {
+    .select-trigger {
+      width: var(--slc-trigger-width, 180px);
+    }
+  }
+}

@@ -1,0 +1,112 @@
+<div class="table-wrapper">
+  <div class="table">
+    <table class="datatable">
+      <thead>
+        <tr>
+          @for (col of cols(); track col) {
+          <th [class]="col">
+            @if (columns[col].sort) {
+            <app-select
+              [defaultValue]="defaultSortCol + '-asc'"
+              [width]="'fit-content'"
+              [buttonStyle]="'ghost'"
+              (changed)="setSort($event)"
+              [group]="'dataTableThSelect'"
+            >
+              <div class="trigger sort-trigger">
+                {{ columns[col].label }}
+                <ion-icon [name]="getSortIcon(col)"></ion-icon>
+              </div>
+
+              <app-select-content>
+                <app-select-item
+                  [icon]="'arrow-up-outline'"
+                  [label]="'Asc'"
+                  [value]="col + '-asc'"
+                />
+                <app-select-item
+                  [icon]="'arrow-down-outline'"
+                  [label]="'Desc'"
+                  [value]="col + '-desc'"
+                />
+              </app-select-content>
+            </app-select>
+            } @else { {{ columns[col].label }} }
+          </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of sortedData()[page() - 1]; track getTrackRow(row)) {
+        <tr>
+          @for (col of cols(); track idx; let idx = $index) {
+          <td [class]="col" [attr.data-value]="row[col]">
+            <ng-container
+              *ngTemplateOutlet="columns[col]?.template || defaultTemplate; context: {$implicit: row, column: col, value: row[col]}"
+            />
+
+            <ng-template #defaultTemplate let-value="value"> {{ value }} </ng-template>
+          </td>
+          } @if (haveActions()) {
+          <td class="actions">
+            <app-dropdown [buttonSize]="'sm'" [buttonStyle]="'ghost'">
+              <div class="trigger">
+                <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+              </div>
+              <div class="content">
+                <ng-container
+                  *ngTemplateOutlet="actionsTemplate; context:{row: row}"
+                ></ng-container>
+              </div>
+            </app-dropdown>
+          </td>
+          }
+        </tr>
+        } @empty {
+        <tr>
+          <td [attr.colspan]="cols().length" class="no-results">No results</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="footer">
+  <div class="total">Total: {{ total }}</div>
+  <div class="pagination">
+    <div class="rows-per-page">
+      Rows per page
+      <app-select
+        [defaultValue]="itemsPerPage().toString()"
+        [width]="'50px'"
+        (changed)="setItemsPerPage($event)"
+      >
+        <app-select-content>
+          @for (option of itemsPerPageOptions; track option.value) {
+          <app-select-item [label]="option.label" [value]="option.value" />
+          }
+        </app-select-content>
+      </app-select>
+    </div>
+    <div class="pages">Page {{ page() }} of {{ pageTotal() }}</div>
+    <app-button
+      [type]="'button'"
+      [style]="'outline'"
+      [size]="'lg'"
+      [disabled]="!hasPrevious()"
+      (click)="previousPage()"
+    >
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </app-button>
+
+    <app-button
+      [type]="'button'"
+      [style]="'outline'"
+      [size]="'lg'"
+      [disabled]="!hasNext()"
+      (click)="nextPage()"
+    >
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </app-button>
+  </div>
+</div>

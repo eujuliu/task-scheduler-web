@@ -29,7 +29,7 @@ export const Default: Story = {
         text: 'task',
       },
       {
-        id: '1',
+        id: '2',
         to: '/emails',
         text: 'email',
       },

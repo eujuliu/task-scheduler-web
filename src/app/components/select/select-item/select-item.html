@@ -1,0 +1,29 @@
+<app-button
+  #selectItem
+  [style]="'ghost'"
+  [full]="true"
+  [size]="'lg'"
+  [style.--btn-max-height]="'34px'"
+  [style.--btn-justify]="'flex-start'"
+  [style.--btn-bg-color]="selected() ? 'var(--clr-surface-a10)' : ''"
+  (click)="select()"
+  appVisibility
+  [checkVisibility]="checkVisibility()"
+  (visibleChange)="visible($event)"
+>
+  <ng-content>
+    <span class="option">
+      <span class="content">
+        @if (icon) {
+        <ion-icon [name]="icon" />
+        } {{ label }}
+      </span>
+
+      <span class="selected-icon">
+        @if (selected()) {
+        <ion-icon name="checkmark-outline" />
+        }
+      </span>
+    </span>
+  </ng-content>
+</app-button>

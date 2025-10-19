@@ -6,10 +6,16 @@
     width: 100%;
   }
 
+  &:has(button:disabled) {
+    pointer-events: none;
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+
   button {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: var(--btn-justify, center);
     gap: 0.5rem;
     border-radius: 5px;
     padding: 0.5rem;
@@ -18,6 +24,8 @@
     background-color: var(--btn-bg-color, var(--clr-primary-a0));
     max-height: 34px;
     font-size: 1.2rem;
+
+    anchor-name: var(--anchor, --anchor);
 
     box-shadow: var(--box-shadow);
     -webkit-box-shadow: var(--box-shadow);
@@ -32,7 +40,7 @@
     }
 
     &.ghost {
-      background-color: transparent;
+      background-color: var(--btn-bg-color, transparent);
       color: var(--btn-text-color, var(--clr-primary-a0));
       box-shadow: none;
       -webkit-box-shadow: none;
@@ -46,7 +54,7 @@
     &.outline {
       background-color: transparent;
       color: var(--clr-primary-a0);
-      border: 1px solid var(--clr-surface-tonal-a20);
+      border: 1px solid var(--clr-surface-a20, #ccc);
 
       &:hover {
         background-color: var(--btn-bg-hover-color, var(--clr-surface-a10));
@@ -55,24 +63,19 @@
 
     &.md {
       padding: 0.8rem;
-      max-height: 40px;
+      max-height: var(--btn-max-height, 40px);
     }
 
     &.lg {
       padding: 1rem;
       font-size: 1.4rem;
-      max-height: 46px;
+      max-height: var(--btn-max-height, 46px);
     }
 
     &.xl {
       padding: 1.2rem;
       font-size: 1.6rem;
-      max-height: 50px;
-    }
-
-    &:disabled {
-      pointer-events: none;
-      opacity: 0.8;
+      max-height: var(--btn-max-height, 50px);
     }
   }
 }

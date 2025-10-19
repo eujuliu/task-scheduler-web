@@ -1,0 +1,23 @@
+<app-button
+  (click)="open()"
+  [style]="buttonStyle"
+  [size]="buttonSize"
+  [role]="'dialog'"
+  [ariaExpanded]="opened()"
+>
+  <div class="dialog-trigger">
+    <ng-content select=".trigger">Open Dialog</ng-content>
+  </div>
+</app-button>
+
+<ng-template #dialog>
+  <div class="content">
+    <app-button (click)="close()" [style]="'ghost'" [size]="'sm'" class="close-btn">
+      <ion-icon name="close-outline"></ion-icon>
+    </app-button>
+
+    <ng-container
+      *ngTemplateOutlet="contentTemplate; context:{open: open, close: close}"
+    ></ng-container>
+  </div>
+</ng-template>

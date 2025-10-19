@@ -7,14 +7,6 @@ const meta: Meta<Button> = {
   excludeStories: /.*Data$/,
   args: {},
   tags: ['autodocs'],
-  render: (args) => ({
-    props: args,
-    template: `
-      <app-button [type]="type" [style]="style" [disabled]="disabled" [full]="full" [size]="size">
-        Text <ion-icon name="heart"></ion-icon>
-      </app-button>
-    `,
-  }),
 };
 
 export default meta;

@@ -1,0 +1,28 @@
+<app-button
+  [ariaExpanded]="opened()"
+  [role]="'combobox'"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  [class.open]="opened()"
+  (click)="open(!opened())"
+  [style]="buttonStyle"
+  [ariaControls]="id()"
+  [disabled]="disabled()"
+>
+  <div class="select-trigger" appResize (resizeEl)="updateTriggerWidth($event.width)">
+    <ng-content select=".trigger">
+      {{ value() || "Select a item" }}
+      <ion-icon name="chevron-down-outline" />
+    </ng-content>
+  </div>
+</app-button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="opened()"
+  (overlayOutsideClick)="open(false)"
+  [cdkConnectedOverlayMinWidth]="contentWidth()"
+>
+  <ng-content />
+</ng-template>

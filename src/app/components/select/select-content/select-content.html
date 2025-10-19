@@ -1,0 +1,15 @@
+<span class="scroll-indicator">
+  @if (showTopArrow()) {
+  <ion-icon name="chevron-up-outline" />
+  }
+</span>
+<div class="options">
+  <ng-content>
+    <div class="empty">No options</div>
+  </ng-content>
+</div>
+<span class="scroll-indicator">
+  @if (showBottomArrow()) {
+  <ion-icon name="chevron-down-outline" />
+  }
+</span>

@@ -1,0 +1,169 @@
+import {
+  Component,
+  computed,
+  ContentChild,
+  CUSTOM_ELEMENTS_SCHEMA,
+  EventEmitter,
+  Input,
+  Output,
+  signal,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
+import { Button } from '../button/button';
+import { isISODate } from '../../shared/services/helpers.service';
+import { Select } from '../select/select';
+import { SelectItem, SelectOption } from '../select/select-item/select-item';
+import { SelectContent } from '../select/select-content/select-content';
+import { Dropdown } from '../dropdown/dropdown';
+import { NgTemplateOutlet } from '@angular/common';
+
+export type Columns = Record<
+  string,
+  {
+    label: string;
+    sort?: boolean;
+    template?: TemplateRef<unknown>;
+  }
+>;
+export type Data = Record<string, string | number>;
+
+export interface LoadItems {
+  start: number;
+  end: number;
+}
+
+@Component({
+  selector: 'app-datatable',
+  imports: [Button, Select, SelectContent, SelectItem, Dropdown, NgTemplateOutlet],
+  templateUrl: './datatable.html',
+  styleUrl: './datatable.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  encapsulation: ViewEncapsulation.None,
+})
+export class DataTable {
+  @ContentChild('actions') actionsTemplate?: TemplateRef<unknown>;
+
+  @Input({ required: true }) columns: Columns = {};
+  @Input({ required: true }) data: Data[] = [];
+  @Input({ required: true }) total = 0;
+  @Input({ required: true, transform: (val: string) => val.trim() }) idCol!: string;
+  @Input({ required: false }) defaultSortCol = 'updatedAt';
+
+  @Output() getMore = new EventEmitter<LoadItems>();
+
+  itemsPerPage = signal(25);
+  page = signal(1);
+  sorting = signal({ col: this.defaultSortCol, asc: true });
+
+  sortValue = computed(() => `${this.sorting().col}-${this.sorting().asc ? 'asc' : 'desc'}`);
+  pageTotal = computed(() => Math.ceil(this.total / this.itemsPerPage()) || 1);
+  cols = computed(() => Object.keys(this.columns));
+  haveActions = computed(() => 'actions' in this.columns);
+
+  hasPrevious = computed(() => this.page() > 1);
+  hasNext = computed(() => this.page() < this.pageTotal());
+
+  sortedData = computed(() => {
+    const items = this.data.sort((a, b) => {
+      const asc = this.sorting().asc;
+      const valA = a[this.sorting().col];
+      const valB = b[this.sorting().col];
+
+      if (valA == null) return asc ? 1 : -1;
+      if (valB == null) return asc ? -1 : 1;
+
+      if (isISODate(valA) && isISODate(valB)) {
+        const aTime = new Date(valA).getTime();
+        const bTime = new Date(valB).getTime();
+        return asc ? aTime - bTime : bTime - aTime;
+      }
+
+      if (typeof valA === 'string' && typeof valB === 'string') {
+        return asc
+          ? valA.localeCompare(valB, undefined, { sensitivity: 'base' })
+          : valB.localeCompare(valA, undefined, { sensitivity: 'base' });
+      }
+
+      if (valA > valB) return asc ? 1 : -1;
+      if (valA < valB) return asc ? -1 : 1;
+      return 0;
+    });
+
+    const chunks = [];
+    for (let i = 0; i < items.length; i += this.itemsPerPage()) {
+      const chunk = items.slice(i, i + this.itemsPerPage());
+      chunks.push(chunk);
+    }
+
+    return chunks;
+  });
+
+  itemsPerPageOptions: SelectOption[] = [
+    {
+      label: '10',
+      value: '10',
+    },
+    {
+      label: '20',
+      value: '20',
+    },
+    {
+      label: '25',
+      value: '25',
+    },
+    {
+      label: '30',
+      value: '30',
+    },
+    {
+      label: '40',
+      value: '40',
+    },
+    {
+      label: '50',
+      value: '50',
+    },
+  ];
+
+  setItemsPerPage(num: string) {
+    this.itemsPerPage.set(Number(num));
+  }
+
+  getTrackRow(row: Data) {
+    return row[this.idCol];
+  }
+
+  getSortIcon(col: string) {
+    if (col === this.sorting().col) {
+      return this.sorting().asc ? 'arrow-up-outline' : 'arrow-down-outline';
+    }
+
+    return 'swap-vertical-outline';
+  }
+
+  setSort(value: string) {
+    const [col, order] = value.split('-');
+    this.sorting.update(() => ({ col, asc: !!order.match(/asc/) }));
+  }
+
+  getPageRange(page: number) {
+    const start = (page - 1) * this.itemsPerPage() + 1;
+    const end = Math.min(this.page() * this.itemsPerPage(), this.total);
+    return { start, end };
+  }
+
+  previousPage() {
+    if (this.hasPrevious()) {
+      this.page.update((val) => val - 1);
+      this.getMore.emit(this.getPageRange(this.page()));
+    }
+  }
+
+  nextPage() {
+    if (this.hasNext()) {
+      this.page.update((val) => val + 1);
+      this.getMore.emit(this.getPageRange(this.page()));
+    }
+  }
+}
